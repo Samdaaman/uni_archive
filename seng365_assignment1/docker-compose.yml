@@ -1,0 +1,15 @@
+version: "3"
+services:
+  app:
+    build: .
+    ports:
+      - "${SENG365_PORT}:4941"
+    environment:
+      - SENG365_MYSQL_HOST
+      - SENG365_MYSQL_USER
+      - SENG365_MYSQL_PASSWORD
+      - SENG365_MYSQL_DATABASE
+    restart: on-failure
+networks:
+  default:
+    driver: overlay

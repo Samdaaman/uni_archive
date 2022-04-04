@@ -1,0 +1,75 @@
+ENME403 pendulum lab data is stored in a MATLAB structure. In
+order to access the data in the MATLAB workspace, you will need
+to do the following.
+
+1.  Load the '.mat' file into MATLAB:
+
+    >> load example.mat
+
+    You may type the name of the resulting workspace variable
+    and hit enter to view the various substructures:
+
+    >> example
+
+    example = 
+
+              X: [1x1 struct]
+              Y: [1x11 struct]
+    Description: [1x1 struct]
+      RTProgram: [1x1 struct]
+        Capture: [1x1 struct]
+
+    The 'X' structure contains timestep data, whilst the the 'Y'
+    structure contains the variables that were captured at each
+    timestep. Lets have a closer look at the variable structure:
+
+    >> example.Y
+
+    ans = 
+
+    1x11 struct array with fields:
+        Name
+        Type
+        Data
+        Unit
+        XIndex
+
+    MATLAB has very conventiently stored the names of the ELEVEN
+    variables that it captured in the 'Name' field. To see
+    what the variable names are, type the following:
+
+    >> example.Y.Name
+
+    You will get a list of rather terse acronyms in response. The
+    expanded variable names are:
+
+    CP = Cart Position [m]
+    CPF = Cart Position Gain Final
+    CV = Cart Velocity [m/s]
+    CVF = Cart Velocity Gain Final
+    NF = Final Tracking Gain
+    PC = Cart Position Command [m]
+    PPF = Pendulum Position Gain Final
+    PPU = Pendulum Position Up [rad]
+    PV = Pendulum Velocity [rad/s]
+    PVF = Pendulum Velocity Gain Final
+    RMV = Raw Cart Motor Voltage [V]
+
+    Note that the final gains are those you supplied to the TAs,
+    plus any compensatory factor that may of been added.
+
+2.  Save the 'X' and 'Y' data into the workspace:
+
+    time_data = example.X(1).Data;
+	
+    cart_position = example.Y(1).Data;
+    cart_position_gain = example.Y(2).Data;
+    cart_velocity = example.Y(3).Data;
+    cart_velocity_gain = example.Y(4).Data;
+    tracking_gain = example.Y(5).Data;
+    cart_position_command = example.Y(6).Data;
+    pendulum_position_gain = example.Y(7).Data;
+    pendulum_position = example.Y(8).Data;
+    pendulum_velocity = example.Y(9).Data;
+    pendulum_velocity_gain = example.Y(10).Data;
+    raw_motor_voltage = example.Y(11).Data;

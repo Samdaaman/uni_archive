@@ -1,0 +1,190 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{minted}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usepackage[T1]{fontenc}
+\usetikzlibrary{arrows}
+\usetikzlibrary{patterns}
+
+\hoffset 0in
+\oddsidemargin 0in
+\voffset -0.4in
+\topmargin 0in
+\headheight 12pt
+\headsep 0,5in
+
+\marginparwidth 50pt
+\marginparsep 5pt
+\reversemarginpar
+
+
+\textwidth 6.5in
+\displaywidth 6.5in
+\textheight 240mm
+\parindent 0mm
+\parskip \baselineskip
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+%\newcommand{\heading}[1]{\vspace{2ex}\section*{#1}}
+\newcommand{\refsection}[1]{Section \ref{#1}}
+
+
+\begin{document}
+
+\title{ \bf ENEL464 - Optimisation }
+\author{}
+\date{}
+\maketitle
+
+
+\section{Introduction}
+
+When writing programs, we use compilers to convert source code into executables.
+This process converts each line of code in an equivalent statement in assembly.
+The basic compilation process will generate a (usually) correct program,
+however, it will contain lots of superfluous instructions that aren't really
+needed to get the correct output. The clever people who develop our C compilers
+include an extra step to the compilation process called \emph{optmisation}. This
+can be enabled and used with different levels to try to simplify the output
+machine code such that it runs faster (sometimes in the order of 5--10$\times$
+faster!).
+
+\section{GCC}
+
+For GCC specifically, optimisations are controlled using the -O flag:
+\begin{minted}{shell}
+    gcc -O3 -o poisson poisson.c
+\end{minted}
+
+There are several options:
+
+\begin{centering}
+    \begin{tabularx}{\linewidth}{ l  X }
+        % Flag & Description \\ \hline \hline
+        -O0 & optimisations disabled (default) \\ \hline
+        -O1 & compiler tries to reduce code size and execution time, without
+              performing optimisations that take a greate deal of compilation
+              time. \\ \hline
+        -O2 & perform nearly all supported optimisations that do not involve a
+              space-speed tradeoff. \\ \hline
+        -O3 & enable more optimisations (but maintain standards compliance). \\
+              \hline
+        -Ofast & disregard strict standards compliance in addition to -O3 (i.e.
+                 fast math). \\ \hline
+        -Os & -O2 except for optimisations that increase code size. \\ \hline
+        -Og & optmise for debugging experience. Equivalent to -O1 except for
+              optimisations that make it harder to debug. \\
+    \end{tabularx}
+\end{centering}
+
+\section{Compiler Explorer}
+
+There is a fantastic tool called \emph{Compiler Explorer}
+(\url{https://godbolt.org/}) which lets you compile code from a variety of
+languages (including C/C++) and can show the generated assembly code for
+platforms like x86-64, ARM, and so on.
+
+Try compiling the following code with GCC for x86-64:
+\begin{minted}{c}
+#include <cstdio>
+
+inline int foo(int bar) {
+    int sum = 1;
+    for (int i = 2; i < bar; i++) {
+        sum *= i;
+    }
+
+    return sum;
+}
+
+
+void bar() {
+    printf("%i", foo(5));
+}
+\end{minted}
+
+In this example, the \emph{foo} function simply calculates the product of all
+the numbers up to the input (i.e. $1 \times 2 \times 3 \times \ldots$). The
+generated code looks like:
+
+\begin{minted}{asm}
+foo(int):
+        push    rbp
+        mov     rbp, rsp
+        mov     DWORD PTR [rbp-20], edi
+        mov     DWORD PTR [rbp-4], 1
+        mov     DWORD PTR [rbp-8], 2
+        jmp     .L2
+.L3:
+        mov     eax, DWORD PTR [rbp-4]
+        imul    eax, DWORD PTR [rbp-8]
+        mov     DWORD PTR [rbp-4], eax
+        add     DWORD PTR [rbp-8], 1
+.L2:
+        mov     eax, DWORD PTR [rbp-8]
+        cmp     eax, DWORD PTR [rbp-20]
+        jl      .L3
+        mov     eax, DWORD PTR [rbp-4]
+        pop     rbp
+        ret
+.LC0:
+        .string "%i"
+bar():
+        push    rbp
+        mov     rbp, rsp
+        mov     edi, 5
+        call    foo(int)
+        mov     esi, eax
+        mov     edi, OFFSET FLAT:.LC0
+        mov     eax, 0
+        call    printf
+        nop
+        pop     rbp
+        ret
+\end{minted}
+
+Quite a bit going on there for a small function!
+
+If we enable \emph{-O1} (add it to the compiler flags), we can see the compiler
+detects that the call to \emph{foo} is a compile time constant. This lets the
+compiler do the math in advance and simply store the result in our program:
+
+\begin{minted}{asm}
+.LC0:
+        .string "%i"
+bar():
+        sub     rsp, 8
+        mov     esi, 24
+        mov     edi, OFFSET FLAT:.LC0
+        mov     eax, 0
+        call    printf
+        add     rsp, 8
+        ret
+\end{minted}
+
+If we then enable \emph{-O3}, we can see the compiler strips out a few
+extraneous instructions that aren't needed for this program giving us a very
+small (and fast) program to run:
+
+\begin{minted}{asm}
+.LC0:
+    .string "%i"
+bar():
+    mov     esi, 24
+    mov     edi, OFFSET FLAT:.LC0
+    xor     eax, eax
+    jmp     printf
+\end{minted}
+
+\section{Next steps}
+
+You should compare the runtime of your solution in the different optimsation
+modes. Does \emph{-Ofast} make a difference compared to \emph{-O3}? Which
+optimisation modes make no change to performance and why?
+
+\end{document}

@@ -1,0 +1,17 @@
+Change Component Footprint: Designator=H4 Old Footprint=SD-53261-0319 New Footprint=MOLEX_KK_3_HDR
+Change Component Comment : Designator=TP5 Old Comment=3V3_R New Comment=TP
+Change Component Comment : Designator=TP6 Old Comment=5V New Comment=TP
+Change Component Comment : Designator=H4 Old Comment=SMD Horiz 1.25mm New Comment=3 Pin Molex KK Hdr
+Change component parameters: Designator = "H4"; Footprint = "MOLEX_KK_3_HDR"; UniqueID = "\LKRCTCSG"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "Molex"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer PN"; Value = "22-23-2031"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Storage Location"; Value = "ECE Dept Store"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier"; Value = "ECE Dept"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier 1"; Value = "Farnell"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier Part Number 1"; Value = "9731156"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier Part Number 2"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "3 Pin Molex KK Hdr"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Verify"; Value = ""; VariantName = "[No Variations]"
+Added Room: Name=Hat

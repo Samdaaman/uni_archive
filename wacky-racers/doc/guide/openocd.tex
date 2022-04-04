@@ -1,0 +1,130 @@
+\chapter{OpenOCD}
+
+The Open On-Chip Debugger (OpenOCD) is an open-source on-chip
+debugging, in-system programming, and boundary-scan testing tool. It
+is able to communicate with various ARM and MIPS microprocessors via
+\wikiref{JTAG}{JTAG} or \wikiref{SWD}{SWD}. It works with a number of different
+\wikiref{JTAG}{JTAG} or \wikiref{SWD}{SWD} interfaces/programmers. User
+interaction can be achieved via telnet or the GNU debugger (GDB).
+
+\section{Configuration files}
+\label{configuration-files}
+
+OpenOCD needs a \wikiref{OpenOCD_configuration}{configuration file} to
+specify the interface (USB or parallel port) and the target system.
+Unfortunately, these change with every new release of OpenOCD.
+
+\section{Running OpenOCD}
+\label{running-openocd}
+
+OpenOCD runs as a daemon program in the background and can be controlled
+from other programs using TCP/IP sockets. This means that you can
+remotely debug from another computer. The socket ports it uses are
+specified in the \wikiref{OpenOCD_configuration}{OpenOCD configuration}
+file supplied when it starts. By default, OpenOCD uses port 3333 for
+\wikiref{GDB}{GDB} and port 4444 for general interaction using Telnet.
+
+\subsection{Communicating with OpenOCD using telnet}
+\label{communicating-with-openocd-using-telnet}
+
+If OpenOCD is running, commands can be sent to it using telnet. For
+example,
+
+\begin{minted}{bash}
+$ telnet localhost:4444
+> monitor flash info 0
+\end{minted}
+
+\subsection{Communicating with OpenOCD using GDB}
+\label{communicating-with-openocd-using-gdb}
+
+If OpenOCD is running, commands can be set to it with
+\wikiref{GDB}{GDB}. There are two steps: connecting to OpenOCD with
+the target remote command, and then sending a command with the GDB
+monitor command. For example,
+
+\begin{minted}{bash}
+$ gdb
+(gdb) target remote localhost:3333
+(gdb) monitor flash info 0
+\end{minted}
+
+\section{OpenOCD commands}
+\label{openocd-commands}
+
+All the gory OpenOCD details can be found in the
+\wikiref{Media:openocd.pdf}{OpenOCD manual}. If you are getting strange
+errors see \wikiref{OpenOCD_errors}{OpenOCD errors}.
+
+\section{Flash programming}
+\label{flash-programming}
+
+OpenOCD can program the flash program memory from a binary file.
+
+\section{FTDI support}
+\label{ftdi-support}
+
+Many \wikiref{JTAG_interface}{JTAG interfaces} use chips made by Future
+Technology Devices International (FTDI) to translate between the USB and
+JTAG protocols. FTDI provide a library to communicate with these
+devices; however, this is not open-source and hence cannot be
+distributed. There is an open-source equivalent,
+\href{http://freshmeat.net/projects/libftdi/}{libftdi}, which in turn
+uses the open-source libusb. This can be temperamental to get working on
+a Windows system.
+
+\section{Getting OpenOCD}
+\label{getting-openocd}
+
+The developers of OpenOCD release source packages (and provide
+subversion access) but do not provide official builds for any
+operating system. However, there are various sites which provide
+prebuilt versions of OpenOCD.
+
+\subsection{Windows}
+\label{windows}
+
+Windows installers for release versions of OpenOCD can be found
+\href{http://www.freddiechopin.info/index.php/en/download/category/4-openocd}{here}.
+Some development versions can be found
+\href{http://www.freddiechopin.info/index.php/en/download/category/10-openocd-dev}{here}.
+Unless you need a feature not present in the release version, avoid
+getting the development versions as they can be less stable.
+
+Alternatively, the
+\href{http://www.siwawi.arubi.uni-kl.de/avr_projects/arm_projects/}{WinARM}
+toolchain contains a version of OpenOCD, albeit one that appears (from
+the description on the project page) to be out of date. It is also
+possible to build your own copy of OpenOCD using either
+\href{http://www.mingw.org/}{MinGW} or
+\href{http://www.cygwin.com/}{Cygwin}; instructions for this are posted
+in various places online.
+
+Realistically, it's probably easier to set up a virtual machine with
+Linux and use that instead.
+
+\subsection{Linux}
+\label{linux}
+
+Many recent distributions of Linux have OpenOCD in their software
+repositories. However, this is often out of date and (in some cases)
+buggy. In this case it is straightforward to
+\wikiref{Building_OpenOCD_under_Linux}{build the latest version}.
+
+\subsection{Mac OSX}
+\label{mac-osx}
+
+The easiest way to install OpenOCD on Mac OSX is to use
+\href{http://brew.sh/}{Homebrew}. If you wish to use JTAG with an
+adaptor based on a FTDI chip (for example, the UCECE USB to JTAG
+adaptor or a Bus Blaster), make sure you include libftdi support by
+installing with the command:
+%
+\begin{minted}{bash}
+$ brew install openocd --enable-ft2232_libftdi
+\end{minted}
+
+\section{Errors}
+\label{errors}
+
+See \wikiref{OpenOCD_errors}{OpenOCD errors}.

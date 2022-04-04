@@ -1,0 +1,4 @@
+Change Component Footprint: Designator=H4 Old Footprint=SD-53261-0319 New Footprint=MOLEX_KK_3_HDR
+Change Component Comment : Designator=TP5 Old Comment=3V3_R New Comment=TP
+Change Component Comment : Designator=TP6 Old Comment=5V New Comment=TP
+Change Component Comment : Designator=H4 Old Comment=SMD Horiz 1.25mm New Comment=3 Pin Molex KK Hdr

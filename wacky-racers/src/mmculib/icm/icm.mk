@@ -1,0 +1,9 @@
+ICM_DIR = $(DRIVER_DIR)/icm
+
+VPATH += $(ICM_DIR)
+SRC += icm20948.c
+
+PERIPHERALS += twi
+
+INCLUDES += -I$(ICM_DIR)
+

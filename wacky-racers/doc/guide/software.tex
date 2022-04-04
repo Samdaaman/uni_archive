@@ -1,0 +1,700 @@
+\chapter{Software}
+
+\section{Preparation}
+\label{preparation}
+
+Do not underestimate the effort required to flash your first LED. You
+require:
+
+\begin{itemize}
+\item
+  A computer with \program{git} installed and a useful shell program such as
+  \program{bash}. UC has a \href{http://ucmirror.canterbury.ac.nz/}{mirror}
+  for a variety of Linux distributions; we recommend Ubuntu or Mint.
+\item
+  A working ARM toolchain (arm-none-eabi-gcc/g++ version 4.9.3 or newer).
+\item
+  \program{OpenOCD} V0.8.0 or later.
+\item
+  An ST-link programmer and 10-wire ribbon cable for programming. You
+  can get the adaptor from Scott Lloyd in the SMT lab. You will need
+  to make your own cable (For a grey ribbon cable, align the red
+  stripe with the small arrow denoting pin 1 on the connector. For a
+  rainbow ribbon cable, connect the brown wire to pin 1.). There are
+  two variants of the ST-link programmer with \textbf{different
+    pinouts} so you may need to customise your programming cable.
+\item
+  Plenty of gumption.
+\end{itemize}
+
+\subsection{Toolchain}
+\label{toolchain}
+
+The required software is installed on computers in the ESL and
+CAE. It should run under both Linux and Windows. If there is a
+problem ask the technical staff.
+
+If you are working from a personal Linux computer make sure to update
+your machine to the latest software versions. This is particularly
+important for the ARM toolchain (arm-none-eabi-gcc/g++) which should be
+at version 4.9.3 or newer. You can do this with the following command
+for an Ubuntu or Mint distribution:
+
+\begin{minted}{bash}
+$ sudo apt update && sudo apt upgrade}
+\end{minted}
+
+For MacOS machines that have \href{https://brew.sh}{homebrew} installed,
+you can use the following command:
+
+\begin{minted}{bash}
+$ brew install openocd git}
+$ brew cask install gcc-arm-embedded}
+\end{minted}
+
+\subsection{Project forking}
+\label{project-forking}
+
+The example software is hosted on the eng-git \program{Git} server at
+\href{https://eng-git.canterbury.ac.nz/wacky-racers/wacky-racers-2021}{\url{https://eng-git.canterbury.ac.nz/wacky-racers/wacky-racers-2021}}.
+Your group leader should have forked this template project. This creates
+your own group copy of the project on the eng-git server that you can
+modify, add members, etc. To fork the project:
+
+\begin{enumerate}
+\item
+  Go to
+  \href{https://eng-git.canterbury.ac.nz/wacky-racers/wacky-racers-2021}{\url{https://eng-git.canterbury.ac.nz/wacky-racers/wacky-racers-2021}}.
+\item
+  Click the `Fork' button. This will create a copy of the main repository
+  for the project.
+\item
+  Click on the `Settings' menu then click the `Expand' button for
+  `Sharing and permissions'. Change `Project Visibility' to `Private'.
+\item
+  Click on the `Members' menu and add group members as Developers.
+\end{enumerate}
+
+\subsection{Project cloning}
+\label{project-cloning}
+
+Once your project has been forked from the template project, each group
+member needs to clone it. This makes a local copy of your project on
+your computer. 
+
+If you are using an ECE computer, it is advised that you clone the
+project on to a removable USB flash drive. This will make git operations
+and compilation a 100 times faster than using the networked file system.
+
+There are two ways to clone the project. If you are impatient and do not
+mind having to enter a username and password for every git pull and push
+operation use:
+%
+\begin{minted}[breaklines]{bash}
+$ git clone https://eng-git.canterbury.ac.nz/groupleader-userid/wacky-racers-2021.git wacky-racers
+\end{minted}
+
+Otherwise, set up \program{ssh-keys} and use:
+%
+\begin{minted}[breaklines]{bash}
+$ git clone git@eng-git.canterbury.ac.nz:groupleader-userid/wacky-racers-2021.git wacky-racers
+\end{minted}
+
+You can several different cloned copies of your project in different
+directories. Sometimes if you feel that the world, and \program{git} in
+particular, is against you, clone a new copy, using:
+
+
+\begin{minted}[breaklines]{bash}
+$ git clone https://eng-git.canterbury.ac.nz/groupleader-userid/wacky-racers-2021.git wacky-racers-new
+\end{minted}
+
+\subsection{Configuration}
+\label{configuration}
+
+Each board has different PIO definitions and requires its own
+configuration information. The \wfile{boards}
+directory contains a number of configurations; one for the hat and racer
+boards. Each configuration directory contains three files:
+
+\begin{itemize}
+\item
+  \file{board.mk} is a makefile fragment that specifies the MCU model,
+  optimisation level, etc.
+\item
+  \file{target.h} is a C header file that defines the PIO pins and
+  clock speeds.
+\item
+  \file{config.h} is a C header file that wraps target.h. It's purpose
+  is for porting to different compilers.
+\end{itemize}
+
+\textbf{You will need to edit the target.h file for your board} and set
+the definitions appropriate for your hardware. Here's an excerpt from
+\file{target.h} for a hat board:
+
+\begin{minted}{C}
+/* USB  */
+#define USB_VBUS_PIO PA5_PIO
+
+/* ADC  */
+#define ADC_BATTERY PB3_PIO
+#define ADC_JOYSTICK_X PB2_PIO
+#define ADC_JOYSTICK_Y PB1_PIO
+
+/* IMU  */
+#define IMU_INT_PIO PA0_PIO
+
+/* LEDs  */
+#define LED1_PIO PA20_PIO
+#define LED2_PIO PA23_PIO
+\end{minted}
+
+\section{First program}
+\label{first-program}
+
+Your first program to test your board should only flash an LED (the
+hello world equivalent for embedded systems). The key to testing new
+hardware is to have many programs that only do one simple task each.
+
+\subsection{OpenOCD}
+\label{openocd}
+
+\program{OpenOCD} is used to program the SAM4S. For this assignment,
+we are using a ST-link programmer to connect to the SAM4S using serial
+wire debug (SWD). This connects to your board with a 10-wire ribbon
+cable and an IDC connector.
+
+\begin{enumerate}
+\item
+  Before you start, disconnect the battery and other cables from your
+  PCB.
+\item
+  Connect a 10-wire ribbon cable from the ST-link programmer to the
+  programming header on your PCB. This will provide 3.3 V to your
+  board so your green power LED should light.
+\item
+  Open a \textbf{new terminal window} and start \program{OpenOCD}.
+\end{enumerate}
+
+\begin{minted}{bash}
+$ cd wacky-racers
+$ openocd -f src/mat91lib/sam4s/scripts/sam4s_stlink.cfg
+\end{minted}
+
+All going well, the last line output from \program{OpenOCD} should be:
+
+\begin{verbatim}
+Info : sam4.cpu: hardware has 6 breakpoints, 4 watchpoints
+\end{verbatim}
+
+Congrats if you get this! It means you have correctly soldered your
+SAM4S. If not, do not despair and do not remove your SAM4S. Instead,
+see \protect\hyperref[troubleshooting]{troubleshooting}.
+
+
+\subsection{LED flash program}
+\label{led-flash-program}
+
+For your first program, use
+\wfile{test-apps/ledflash1/ledflash1.c}. The macros
+\code{LED1_PIO} and \code{LED2_PIO} need to be defined in
+\file{target.h} (see
+\protect\hyperref[configuration]{configuration}). If your LEDs are
+active high, replace 1 with 0 in the LED config structures.
+
+\inputminted{C}{../../src/test-apps/ledflash1/ledflash1.c}
+
+\subsection{Compilation}
+\label{compilation}
+
+Due to the many files required, compilation is performed using
+makefiles.
+
+The demo test programs are generic and you need to specify which board
+you are compiling them for. The board configuration file can be chosen
+dynamically by defining the environment variable \code{BOARD}. For
+example:
+%
+\begin{minted}{bash}
+$ cd src/test-apps/ledflash1
+$ BOARD=racer make
+\end{minted}
+
+If all goes well, you should see at the end:
+%
+\begin{verbatim}
+   text    data     bss     dec     hex filename
+  19432    2420    2732   24584    6008 ledflash1.bin
+\end{verbatim}
+
+To avoid having to specify the environment variable \code{BOARD}, you
+can define it for the rest of your session using:
+%
+\begin{minted}{bash}
+$ export BOARD=racer
+\end{minted}
+%
+and then just use:
+%
+\begin{minted}{bash}
+$ make
+\end{minted}
+
+Note, if you compile with the \code{BOARD} environment variable set incorrectly, use:
+%
+\begin{minted}{bash}
+$ make clean
+$ make  
+\end{minted}
+%
+to delete all the object files and rebuild.
+
+
+\subsection{Booting from flash memory}
+\label{booting-from-flash-memory}
+
+By default the SAM4S runs a bootloader program stored in ROM. The SAM4S
+needs to be configured to run your application in flash memory.
+
+If \program{OpenOCD} is running you can do this with:
+
+\begin{minted}{bash}
+$ make bootflash
+\end{minted}
+
+Unless you force a complete erasure of the SAM4S flash memory by
+connecting the \pin{ERASE} pin to 3.3 V, you will not need to repeat
+this command.
+
+\subsection{Programming}
+\label{programming}
+
+If \program{OpenOCD} is running you can store your program in the flash
+memory of the SAM4S using:
+
+\begin{minted}{bash}
+$ make program
+\end{minted}
+
+When this finishes, one of your LEDs should flash. If so, congrats! If
+not, see \protect\hyperref[troubleshooting]{troubleshooting}.
+
+To reset your SAM4S, you can use:
+%
+\begin{minted}{bash}
+$ make reset
+\end{minted}
+
+\section{USB interfacing}
+\label{usb-interfacing}
+
+To help debug your programs, it is wise to use \wikiref{USB CDC}{USB
+  CDC}.  This is a serial protocol for USB.  With some magic, the
+stdin, stdout, and stderr streams can sent over USB.  For example,
+here's an example program
+\wfile{test-apps/usb_serial_test1/usb_serial_test1.c}.
+
+\inputminted{C}{../../src/test-apps/usb_serial_test1/usb_serial_test1.c}
+
+Note, the string \code{"/dev/usb_tty"} is used to name the USB serial
+device on the SAM4S so that it can be used by the C stdio function
+\code{freopen}\footnote{When running a program with an operating
+  system, this is all set up before \code{main} is called.}.
+
+To get this programme to work you need to compile it and program the SAM4S using:
+
+\begin{minted}{bash}
+$ cd wacky-racers/src/test-apps/usb_serial_test1
+$ make program
+\end{minted}
+
+You then need to connect your computer to the USB connector on your PCB.
+If you are running Linux, run:
+%
+\begin{minted}{bash}
+$ dmesg
+\end{minted}
+
+This should say something like:
+%
+\begin{verbatim}
+Apr 30 11:03:50 thing4 kernel: [52704.481352] usb 2-3.3: New USB device found, idVendor=03eb, idProduct=6202
+Apr 30 11:03:50 thing4 kernel: [52704.481357] usb 2-3.3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+Apr 30 11:03:50 thing4 kernel: [52704.482060] cdc_acm 2-3.3:1.0: ttyACM0: USB ACM device
+\end{verbatim}
+
+Congrats if you see \texttt{ttyACM0:\ USB\ ACM\ device}!  If not, see
+\wikiref{USB_debugging}{USB debugging}.
+
+You can now run a \wikiref{Serial_terminal_applications}{serial
+  terminal program}. For example, on Linux:
+
+\begin{minted}{bash}
+$ gtkterm -p /dev/ttyACM0
+\end{minted}
+
+All going well, this will repeatedly print 'Hello world'.
+
+If you get an error 'device is busy', it is likely that the ModemManager
+program has automatically connected to your device on the sly. This
+program should be disabled on the ECE computers. For more about this and
+using other operating systems, see \wikiref{USB CDC}{USB CDC}.
+
+\section{Test programs}
+\label{test-programs}
+
+There are a number of test programs in the directory
+\wfile{test-apps}. Where possible these are written to be
+independent of the target board using configuration files (see
+\protect\hyperref[configuration]{configuration}).
+
+\subsection{PWM test}
+\label{pwm-test}
+
+The program \wfile{test-apps/pwm_test2/pwm_test2.c} provides an
+example of driving PWM signals.
+
+\inputminted{C}{../../src/test-apps/pwm_test2/pwm_test2.c}
+
+Notes:
+%
+\begin{enumerate}
+\item
+  This is for a different H-bridge module that requires two PWM signals
+  and forward/reverse signals. You will need to generate four PWM
+  signals or be clever with two PWM signals.
+\item
+  The \code{pwm_cfg_t} structure configures the frequency, duty
+  cycle and alignment of the output PWM.
+\item The frequency is likely to be too high for your motor.
+\item \code{pwm_channels_start} is used to start the PWM channels simultaneously.  
+\end{enumerate}
+
+The most likely problem is that you have not used a PIO pin that can
+be driven as a PWM output. The SAM4S can generate four independent
+hardware PWM signals. See \wfile{mat91lib/pwm/pwm.c} for a list of
+supported PIO pins. Note, \pin{PA16}, \pin{PA30}, and \pin{PB13} are
+different options for PWM2.
+
+To drive the motors you will need to use a bench power supply. Start
+with the current limit set at 100\,mA maximum in case there are any
+board shorts.  When all is well, you can increase the current limit.
+
+\subsection{IMU test}
+\label{imu-test}
+
+The MPU9250 IMU connects to the SAM4S using the I2C bus (aka TWI bus).
+The program \wfile{test-apps/imu_test1/imu_test1.c} provides an
+example of using the MPU9250 IMU.  All going well, this prints three
+16-bit acceleration values per line to USB CDC. Tip your board over,
+and the the third (z-axis) value should go negative since this
+measures the effect of gravity on a little mass inside the IMU pulling
+on a spring.
+
+If you get `ERROR: can't find MPU9250!', the main reasons are:
+
+\begin{enumerate}
+\item
+  You have specified the incorrect address. Use \code{MPU_0} if the
+  AD0 pin is connected to ground otherwise use \code{MPU_1}.
+\item
+  You are using TWI1. The \pin{PB4} and \pin{PB5} pins used by TWI1 default to JTAG
+  pins. See \protect\hyperref[disabling-jtag-pins]{disabling JTAG pins}.
+\item
+  You do not have TWI/I2C pull-up resistors connected to 3V3 or the
+  wrong resistor values. Use a scope to look at the signals \pin{TWCK/SCL}
+  and \pin{TWD/SDA}.
+\item
+  Check that the auxiliary I2C bus signals are not connected
+  (otherwise the magnetometer will not respond).  
+\item
+  You have a soldering problem. Try pressing on a side of the IMU with a
+  fingernail to see if it starts working; you might have a dry joint.
+\end{enumerate}
+
+Other problems:
+%
+\begin{enumerate}
+\item If you reset the SAM4S in the middle of a transaction with the
+IMU, the IMU gets confused and holds the \pin{TWD/SDA} line low. This
+requires recycling of the power or sending out some dummy clocks on
+the \pin{TWCK/SCL} signal.
+\end{enumerate}
+
+
+\subsection{Radio test}
+\label{radio-test}
+
+The program \wfile{test-apps/radio_tx_test1/radio_tx_test1.c} provides
+an example of using the radio as a transmitter.
+
+The companion program
+\wfile{test-apps/radio_rx_test1/radio_rx_test1.c} provides an example
+of using the radio as a receiver.
+
+Notes:
+%
+\begin{enumerate}
+\item
+  Both programs must use the same RF channel and the same address. Some
+  RF channels are better than others since some overlap with WiFi
+  and Bluetooth. The address is used to distinguish devices
+  operating on the same channel. Note, the transmitter expects an
+  acknowledge from a receiver on the same address and channel.
+\item
+  The radio `write` method blocks waiting for an auto-acknowledgement
+  from the receiver device. This acknowledgement is performed in
+  hardware. If no acknowledgement is received, it retries for up to 15
+  times. The auto-acknowledgement and number of retries can be
+  configured in software.
+\end{enumerate}
+
+If you cannot communicate between your hat and racer boards, try
+communicating with the radio test modules Scott Lloyd has in the SMT
+lab.
+
+\section{Your hat/racer program}
+\label{your-hatracer-program}
+
+We recommend that build your programs incrementally and that you poll
+your devices with a paced loop and not use interrupts.  It is a good
+idea to disable the \hyperref[watchdog-timer]{watchdog timer} until
+you have robust code.
+
+\section{Howtos}
+\label{howtos}
+
+\subsection{PIO pins}
+
+mat91lib provides efficient PIO abstraction routines in
+\wfile{mat91lib/sam4s/pio.h}.  Each pin can be configured as follows:
+%
+\begin{minted}{C}
+    PIO_INPUT,              /* Configure as input pin.  */
+    PIO_PULLUP,             /* Configure as input pin with pullup.  */
+    PIO_PULLDOWN,           /* Configure as input pin with pulldown.  */
+    PIO_OUTPUT_LOW,         /* Configure as output, initially low.  */
+    PIO_OUTPUT_HIGH,        /* Configure as output, initially high.  */
+    PIO_PERIPH_A,           /* Configure as peripheral A.  */
+    PIO_PERIPH_A_PULLUP,    /* Configure as peripheral A with pullup.  */
+    PIO_PERIPH_B,           /* Configure as peripheral B.  */
+    PIO_PERIPH_B_PULLUP,    /* Configure as peripheral B with pullup.  */
+    PIO_PERIPH_C,           /* Configure as peripheral C.  */
+    PIO_PERIPH_C_PULLUP     /* Configure as peripheral C with pullup.  */
+\end{minted}
+
+Here's an example:
+%
+\begin{minted}{C}
+  #include "pio.h"
+
+  // Configure PA0 as an output and set default state to low.
+  pio_config_set (PIO_PA0, PIO_OUTPUT_LOW);
+
+  // Set PA0 high.
+  pio_output_high (PIO_PA0);
+
+  // Set PA0 low.  
+  pio_output_low (PIO_PA0);
+
+  // Set PA0 to value.
+  pio_output_set (PIO_PA0, value);  
+
+  // Toggle PA0.  
+  pio_output_toggle (PIO_PA0);    
+
+  // Reonfigure PA0 as an output connected to peripheral A.
+  pio_config_set (PIO_PA0, PIO_PERIPH_A);
+
+  // Reonfigure PA0 as an input with pullup enabled.
+  pio_config_set (PIO_PA0, PIO_INPUT_PULLUP);
+
+  // Read state of PIO pin.
+  result = pio_input_get (PIO_PA0);
+\end{minted}
+
+
+\subsection{Delaying}
+
+mat91lib provides a macro \code{DELAY_US} in
+\wfile{mat91lib/delay.h} for a busy-wait delay in microseconds
+(this can be a floating point value).  The CPU just spins for a
+precomputed number of clock cycles.  The argument should be a constant
+so the compiler can compute the number of clock cycles.  This function
+needs to be compiled with optimisation.
+
+mat91lib also provides a function \code{delay_ms} for a busy-wait
+delay in milliseconds (this must be an integer).  All this function
+does is call \code{DELAY_US (1000)} the required number of times.
+
+An example program is \wfile{test-apps/delay_test1/delay_test1.c}.
+
+
+\subsection{Reading from ADC}
+\label{ADC}
+
+\wfile{test-apps/adc_usb_serial_test1/adc_usb_serial_test1.c} shows
+how to read a single ADC channel.  \textbf{Note, this is not tested!}
+For more details see \wfile{mat91lib/adc/adc.h}.
+
+\wfile{test-apps/adc_usb_serial_test2/adc_usb_serial_test2.c} shows
+how to read from two multiplexed ADC channels.  \textbf{Note, this is
+  not tested!}
+
+The ADC can be also set up to stream data continuously; this is a lot
+more complicated.
+
+
+\subsection{Reading from pushbutton}
+\label{pushbutton}
+
+\wfile{test-apps/button_test2/button_test2.c} shows the use of a
+simple button driver to read a pushbutton.  This driver does button
+debouncing and state-transition detection.  For more details see
+\wfile{mmculib/button/button.h}.
+
+
+\subsection{Disabling JTAG pins}
+\label{disabling-jtag-pins}
+
+By default \pin{PB4} and \pin{PB5} are configured as JTAG pins. You can turn
+them into PIO pins or use them for TWI1 using:
+%
+\begin{minted}{C}
+#include "mcu.h"
+
+void main (void)
+{
+    mcu_jtag_disable ();
+}
+\end{minted}
+
+\subsection{Watchdog timer}
+\label{watchdog-timer}
+
+The watchdog timer is useful for resetting the SAM4S if it hangs in a
+loop.  It is disabled by default but can be enabled using:
+%
+\begin{minted}{C}
+#include "mcu.h"
+
+void main (void)
+{
+    mcu_watchdog_enable ();
+   
+    while (1)
+    {
+         /* Do your stuff here.  */
+
+         mcu_watchdog_reset ();
+    }
+}
+\end{minted}
+
+\section{Under the bonnet}
+\label{under-the-bonnet}
+
+\file{mmculib} is a library of C drivers, mostly for performing high-level I/O.
+It is written to be microcontroller neutral.
+
+\file{mat91lib} is a library of C drivers specifically for interfacing
+with the peripherals of Atmel AT91 microcontrollers such as the Atmel
+SAM4S. It provides the hardware abstraction layer.
+
+The building is controlled by \wfile{mat91lib/mat91lib.mk}. This is a
+makefile fragment loaded by \wfile{mmculib/mmculib.mk}.
+\file{wacky-reacers/src/mat91lib/mat91lib.mk} loads other makefile fragments for each
+peripheral or driver required. It also automatically generates
+dependency files for the gazillions of other files that are required to
+make things work.
+
+\section{Git}
+\label{git}
+
+To properly use git you should commit and push often. The smaller the
+changes and the more often you make per commit, the smaller the chance
+of the dreaded merge conflict.
+
+\subsection{Git pulling from upstream}
+\label{git-pulling-from-upstream}
+
+To be able to get updates if the template project is modified you will
+need to:
+
+\begin{minted}{bash}
+$ cd wacky-racers 
+$ git remote add upstream https://eng-git.canterbury.ac.nz/wacky-racers/wacky-racers-2021.git  
+\end{minted}
+
+Again if you do not want to manually enter your password (and have
+ssh-keys uploaded) you can use:
+%
+\begin{minted}[breaklines]{bash}
+$ cd wacky-racers 
+$ git remote add upstream git@eng-git.canterbury.ac.nz:wacky-racers/wacky-racers-2021.git
+\end{minted}
+
+Once you have defined the upstream source, to get the updates from the
+main repository use:
+%
+\begin{minted}{bash}
+$ git pull upstream master
+\end{minted}
+
+If you enter the wrong URL make a mistake, you can list the remote
+servers and delete the dodgy entry using:
+
+\begin{minted}{bash}
+$ git remote -v
+$ git remote rm upstream
+\end{minted}
+
+Note, \textbf{origin} refers to your group project and \textbf{upstream}
+refers to the template project that origin was forked from.
+
+\subsection{Git merging}
+\label{git-merging}
+
+The bane of all version control programs is dealing with a merge
+conflict. You can reduce the chance of this happening by committing and
+pushing faster than other people in your group.
+
+If you get a message such as:
+
+\begin{verbatim}
+From https://eng-git.canterbury.ac.nz/wacky-racers/wacky-racers-2021
+ * branch            master     -> FETCH_HEAD
+error: Your local changes to the following files would be overwritten by merge:
+    src/test-apps/imu_test1/imu_test1.c
+Please, commit your changes or stash them before you can merge.
+\end{verbatim}
+
+what you should so is:
+
+\begin{minted}{bash}
+$ git stash
+$ git pull
+$ git stash pop
+# You may now have a merge error.  You will now have to edit the offending file, in this case imu_test1.c
+# Once the file has been fixed
+$ git add src/test-apps/imu_test1/imu_test1.c
+$ git commit -m "Fix merge"
+\end{minted}
+
+Sometimes when you do a git pull you will be thrown into a text editor
+to type a merge comment. The choice of editor is controlled by an
+environment variable \code{EDITOR}. On the ECE computers this defaults
+to emacs. You can changed this by adding a line such as the following to
+the \file{.bash\_profile} file in your home directory.
+
+\begin{minted}{bash}
+$ export EDITOR=geany
+\end{minted}
+
+By the way, to exit emacs type ctrl-x ctrl-c, to exit vi or vim type \code{:q!}
+
+\textbf{Please do not edit the files in the mat91lib, mmculib, and
+wackylib} directories since this can lead to merge problems in the
+future. If you find a bug or would like additional functionality let MPH
+or one of the TAs know.

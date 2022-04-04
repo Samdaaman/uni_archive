@@ -1,0 +1,39 @@
+CSV text has been written to file : SEMI_DISCRETE.csv
+
+Library Component Count : 32
+
+Name                Description
+----------------------------------------------------------------------------------------------------
+
+DL_150060BS75000    LED Blue 270mcd 0603 SMD
+DL_150060GS75000    LED Dk Green 430mcd 0603 SMD
+DL_150060RS75000    LED Red 250mcd 0603 SMD
+DL_150060VS75000    LED Bright Green 40mcd 0603 SMD
+DL_150060YS75000    LED Yellow 120mcd 0603 SMD
+DL_150141AS73100    LED Amber 330mcd 3528 SMD
+DL_150141BS73100    LED Blue 270mcd 3528 SMD
+DL_150141GS73100    LED Green 1000mcd  3528 SMD
+DL_150141RS73100    LED Red 300mcd 3528 SMD
+DL_LED3mm           LED 3mm Dia Thru Hole
+DL_LED5mm           LED 5mm Dia Thru Hole
+DR_BAS16TT1G        Diode Switching, Vr 75V, 200mA, SOT-416
+DR_ES1A             Ultrafast Rectifier SMD, SMA (DO-214C)
+DS_BAS70-04         Schottky Dual Series Diode, SOT23,
+DS_BAT54SW          Schottky Barrier Double Diode 30V @ 200mA SOT323
+DS_BAV70LT3         Dual Switching Diodes, Common Cathode, 3-Pin SOT-23,
+DS_SS14E3           DIODE, SCHOTTKY, 1A, 40V, DO-214AC
+DS_VS-30BQD015TRPBF DIODE SCHOTTKY 15V 3A SMC
+DZ_4.7V             BZX84C4V7LT1G - DIODE, ZENER, 4.7V, 225MW, SOT23
+SE_ATSAM4S16BA-MU   IC MCU 32BIT 512KB FLASH 64LQFP
+SV_LD29300P2M33R    3A, Very Low-Drop Voltage Reg, 3.3V, 6-Pin P2PAK/A
+SV_RT9043           IC REG LDO ADJ 0.4A SOT23-5
+SV_TLV1117-33CDC    IC REG LDO 3.3V 0.8A SOT223
+SV_TLV1117-50CDC    IC REG LDO 5V 0.8A SOT223
+SV_TLV70233DBVR     IC REG LDO 3.3V 0.3A SOT23-5
+TB_2PB709ART        PNP GP Bipolar Transistor -45V -100MA SOT23
+TB_BC817W           NPN GP Bipolar Transistor 45V 500mA SOT323
+TF_MMBF5484         JFET N-CH 25V SOT-23
+TM_BSH105           MOSFET N-CH 20V 1.05A SOT-23
+TM_BSH114           MOSFET N-CH 100V 0.85A SOT-23
+TM_SSM3J328R        MOSFET P-CH 50V 130MA SOT23-3
+TM_ZXM61N02FTA      MOSFET N-CH 20V 1.7A SOT23-3

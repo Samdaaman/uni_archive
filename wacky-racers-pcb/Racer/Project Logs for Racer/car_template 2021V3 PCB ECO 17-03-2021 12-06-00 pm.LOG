@@ -1,0 +1,19 @@
+Removed Pin From Net: NetName=R_OUT2 Pin=H1-1
+Removed Pin From Net: NetName=R_OUT1 Pin=H1-2
+Removed Pin From Net: NetName=L_OUT2 Pin=H2-1
+Removed Pin From Net: NetName=L_OUT1 Pin=H2-2
+Removed Pin From Net: NetName=A_OUT2 Pin=H3-1
+Removed Pin From Net: NetName=A_OUT1 Pin=H3-2
+Removed Pin From Net: NetName=B_OUT2 Pin=H4-1
+Removed Pin From Net: NetName=B_OUT1 Pin=H4-2
+Added Pin To Net: NetName=A_OUT2 Pin=H1-1
+Added Pin To Net: NetName=A_OUT1 Pin=H1-2
+Added Pin To Net: NetName=B_OUT2 Pin=H2-1
+Added Pin To Net: NetName=B_OUT1 Pin=H2-2
+Added Pin To Net: NetName=R_OUT2 Pin=H3-1
+Added Pin To Net: NetName=R_OUT1 Pin=H3-2
+Added Pin To Net: NetName=L_OUT2 Pin=H4-1
+Added Pin To Net: NetName=L_OUT1 Pin=H4-2
+Added Member To Class: ClassName=MotorDriver Member=Component U1 DRV8833
+Added Room: Name=MotorDriver
+Added Room: Name=Racer

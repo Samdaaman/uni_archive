@@ -1,0 +1,7 @@
+The content was extracted from ecewiki and converted to LaTeX using:
+
+pandoc hardware.wiki -f mediawiki -t latex --standalone -o hardware.tex
+
+The following produces simpler output but the sections are not for a book.
+
+pandoc openocd.wiki -f mediawiki -t latex -o openocd.tex

@@ -1,0 +1,55 @@
+CSV text has been written to file : CONNECTORS.csv
+
+Library Component Count : 48
+
+Name                Description
+----------------------------------------------------------------------------------------------------
+
+JA_HDR_IDC_10X2_R/A IDC Header, 2.54mm, 20-Pin, Right Angle
+JA_HDR_IDC_10X2_VERTIDC Header, 2.54mm, 20-Pin, Vert
+JA_HDR_IDC_13X2_R/A IDC Header, 2.54mm, 26-Pin, Right Angle
+JA_HDR_IDC_13X2_VERTIDC Header, 2.54mm, 26-Pin, Vert
+JA_HDR_IDC_17X2_R/A IDC Header, 2.54mm, 34-Pin, Right Angle
+JA_HDR_IDC_17X2_VERTIDC Header, 2.54mm, 34-Pin, Vert
+JA_HDR_IDC_20X2_R/A IDC Header, 2.54mm, 40-Pin, Right Angle
+JA_HDR_IDC_20X2_VERTIDC Header, 2.54mm, 40-Pin, Vert
+JA_HDR_IDC_5X2_R/A  IDC Header, 2.54mm, 10-Pin, Right Angle
+JA_HDR_IDC_5X2_VERT IDC Header, 2,54mm, 10-Pin, Vert
+JA_HDR_IDC_8X2_R/A  IDC Header, 2.54mm, 16-Pin, Right Angle
+JA_HDR_IDC_8X2_VERT IDC Header, 2.54mm, 16-Pin, Vert
+JA_MOLEX_KK_10POS   CONN HEADER 10POS 2.54mm VERT_ Thru Hole
+JA_MOLEX_KK_2POS    CONN HEADER 2POS 2.54mm VERT_Thru Hole
+JA_MOLEX_KK_3POS    CONN HEADER 3POS 2.54mm VERT_Thru Hole
+JA_MOLEX_KK_4POS    CONN HEADER 4POS 2.54mm VERT_Thru Hole
+JA_MOLEX_KK_5POS    CONN HEADER 5POS 2.54mm VERT_Thru Hole
+JA_MOLEX_KK_6POS    CONN HEADER 6POS 2.54mm VERT_Thru Hole
+JA_MOLEX_KK_8POS    CONN HEADER 8POS 2.54mm VERT_Thru Hole
+JA_TERM_BLK_HDR_2 PINTERM_BLK_HEADER 5.08mm 2 Pos R/A Thru Hole
+JA_TERM_BLK_HDR_3 PINTERM_BLK_HEADER 5.08mm 3-Pos vert Thru Hole
+JA_TERM_BLK_HDR_4 PINTERM_BLK_HEADER 5.08mm 4-Pos R/A Thru Hole
+JB_53261-02         Header_Horiz_2Pos_1.25mm_125V@1A_SMT
+JB_53261-03         Header_Horiz_3Pos_1.25mm_125V@1A_SMT
+JB_53261-04         Header_Horiz_4Pos1.25mm_125V@1A_SMT
+JB_53261-05         Header_Horiz_5Pos_1.25mm_125V@1A_SMT
+JB_53261-06         Header_Horiz_6Pos_1.25mm_125V@1A_SMT
+JB_53261-08         Header_Horiz_8Pos_1.25mm_125V@1A_SMT
+JB_53398-02         Header_Vert_2Pos_1.25mm_125V@1A_SMT
+JB_53398-03         Header_Vert_3Pos_1.25mm_125V@1A_SMT
+JB_53398-04         Header_Vert_4Pos_1.25mm_125V@1A_SMT
+JB_53398-05         Header_Vert_5Pos_1.25mm_125V@1A_SMT
+JB_53398-06         Header_Vert_6Pos_1.25mm_125V@1A_SMT
+JB_53398-08         Header_Vert_8Pos_1.25mm_125V@1A_SMT
+JB_FH34S-6S-0.5SH   CONN FPC/FFC 6POS .5MM ZIF SMD
+JB_HDR_IDC_10X2_VERTIDC Header, 1,27mm, 20-Pin, Vert, SMT
+JB_HDR_IDC_5X2_VERT IDC Header, 1,27mm, 10-Pin, Vert, SMT
+JB_HDR_IDC_8X2_VERT IDC Header, 1,27mm, 16-Pin, Vert, SMT
+JB_IDC_BOX_HDR_10   IDC BOX HEADER 2.54mm 10POS SMT
+JB_IDC_BOX_HDR_16   IDC BOX HEADER 2.54mm 16POS SMT
+JB_IDC_BOX_HDR_20   IDC BOX HEADER 2.54mm 20POS SMT
+JB_M52H_10_1.27     Header 1.27mm Pitch SIL 10 Way SMT
+JB_M52H_5_1.27      Header 1.27mm Pitch SIL 5 Way SMT
+JB_M52S_10_1.27     Socket 1.27mm Pitch SIL 10 Way SMT
+JC_RJ45_8/8         Right Angle, Standard Profile, RJ45-Keyed, Flange Mount PCB Jack
+JP_1613 14          Power supply chassis socket, SMD, Right Angle, with break contacts, 24V DC, 3.5A
+JS_USB_MICRO_B_SMT  CONN USB MICRO B RECPT SMT R/A
+JS_USB_MINI_B_SMT   USB 2.0, Right Angle, SMT, B Type, Receptacle, 5 Position,

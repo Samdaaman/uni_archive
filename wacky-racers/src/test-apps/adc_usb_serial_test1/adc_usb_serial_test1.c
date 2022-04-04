@@ -1,0 +1,63 @@
+/* File:   adc_usb_cdc_test1.c
+   Author: M. P. Hayes, UCECE
+   Date:   3 May 2021
+   Descr:  This reads from ADC channel 0.
+           It triggers ADC conversions as each sample is read.
+*/
+#include <stdio.h>
+#include "usb_serial.h"
+#include "adc.h"
+#include "pacer.h"
+#include "delay.h"
+
+#define PACER_RATE 2
+
+#define ADC_CLOCK_FREQ 24000000
+
+static const adc_cfg_t adc_cfg =
+{
+    .bits = 12,
+    .channel = ADC_CHANNEL_9,
+    .trigger = ADC_TRIGGER_SW,
+    .clock_speed_kHz = ADC_CLOCK_FREQ / 1000
+};
+
+static usb_serial_cfg_t usb_serial_cfg =
+{
+    .read_timeout_us = 1,
+    .write_timeout_us = 1,
+};
+
+
+int main (void)
+{
+    usb_cdc_t usb_cdc;
+    adc_t adc;
+    int count = 0;
+
+    // Create non-blocking tty device for USB CDC connection.
+    usb_serial_init (&usb_serial_cfg, "/dev/usb_tty");
+
+    freopen ("/dev/usb_tty", "a", stdout);
+    freopen ("/dev/usb_tty", "r", stdin);
+    
+    adc = adc_init (&adc_cfg);
+
+    pacer_init (PACER_RATE);
+    while (1)
+    {
+        uint16_t data[1];
+
+        adc_read (adc, data, sizeof (data));
+        printf ("%3d: %d\n", count, data[0]);
+        fflush (stdout);
+        //2585 is 5V ADC value
+        if (data[0] < 2585){
+            printf ("Battery Voltage Low!!!\n\n");
+            fflush (stdout);
+        }
+
+
+        delay_ms(500);
+    }
+}

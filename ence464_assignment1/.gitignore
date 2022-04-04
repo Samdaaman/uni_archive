@@ -1,0 +1,15 @@
+# C/C++ build files
+
+*.o
+*.d
+*.elf
+*.bin
+
+build
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.vscode

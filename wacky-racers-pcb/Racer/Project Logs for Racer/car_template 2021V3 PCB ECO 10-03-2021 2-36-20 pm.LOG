@@ -1,0 +1,28 @@
+Removed Pin From Net: NetName=NetC26_2 Pin=C26-2
+Removed Pin From Net: NetName=GND Pin=D1-1
+Removed Pin From Net: NetName=V_BATT_FUSED Pin=D1-3
+Removed Pin From Net: NetName=NetC12_1 Pin=D2-2
+Removed Pin From Net: NetName=NetC12_1 Pin=L1-1
+Removed Pin From Net: NetName=GND Pin=Q1-1
+Removed Pin From Net: NetName=3V3_RADIO Pin=R5-2
+Removed Pin From Net: NetName=NetF1_1 Pin=R6-2
+Removed Pin From Net: NetName=GND Pin=R14-1
+Removed Member From Class: ClassName=Racer Member=D1
+Removed Member From Class: ClassName=Racer Member=R5
+Change Component Designator: OldDesignator=S2 NewDesignator=S?
+Added Pin To Net: NetName=NetC26_2 Pin=C26-1
+Added Pin To Net: NetName=NetC12_2 Pin=D2-2
+Added Pin To Net: NetName=NetC12_2 Pin=L1-1
+Added Pin To Net: NetName=3V3_RADIO Pin=R8-2
+Added Pin To Net: NetName=GND Pin=R14-2
+Added Pin To Net: NetName=GND Pin=U5-EPAD
+Change Net Name : Old Net Name=NetC26_2 New Net Name=NetC26_1
+Added Pin To Net: NetName=NetC26_2 Pin=C26-2
+Added Pin To Net: NetName=NetC26_2 Pin=R14-1
+Added Net: Name=NetC26_2
+Added Pin To Net: NetName=NetQ1_1 Pin=Q1-1
+Added Pin To Net: NetName=NetQ1_1 Pin=R6-2
+Added Net: Name=NetQ1_1
+Change Class Name : Old Net Name=U_MotorDriver New Net Name=MotorDriver
+Added Room: Name=MotorDriver
+Added Room: Name=Racer

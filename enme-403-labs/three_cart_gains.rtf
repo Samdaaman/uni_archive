@@ -1,0 +1,22 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 THREE CART 2ND GAINS\
+It was observed that the first and second set of gains (found with LQR) resulted in overdamped responses in the test rig, despite being critically damped in the simulation. A clear undershoots were observed with both of these gains.\
+\
+This was attributed to a misalignment between the simulated model and the real three cart testbed. Whilst a range of factors including circuit latency, asymmetric cart properties and rail backlash attributed to this, the key factor was a lack of damping in the simulated model. In the provided model, there was no damping attributed to cart 1 (C1=0). \
+\
+As the controller acts through cart 1, this unaccounted for dynamic may be responsible for the undershooting the cart 3 reference. Despite the use of a inner-control loop, it is highly unlikely that C1 could be entirely mitigated.\
+\
+To overcome this, adding \'91fudge-factors\'92 to the existing damping coefficients was considered. These \'91fudge-factors\'92 may be derived by successively approximating coefficients over C1-C3 until the same gainset resulted in similar undershooting behaviour in the simulation. However, method was not elected due to the strong results from the H_inf selected gains.\
+\
+The mild H_inf gain set provided excellent tracking and stability, whereas the spicy H_inf gain set provided a much faster response, at the expense of a large overshoot. Rather than repeating the H_inf gain determination procedure for a modified simulation, the root locus of the H_inf gain modification was extrapolated. By recognising the locus of poles between these two gain sets, a gain selection that balanced these two behaviours was found.\
+\
+Firstly, the mild and spicy CL system poles were plotted. It can be seen that the two dominant oscillatory poles move rapidly towards the imaginary axis as gamma is minimised in the H_inf process. This pole movement matches the increase in oscillatory behaviour seen in the system response. As these oscillatory poles move towards the imaginary axis, the damping of the system response decreases, which overcomes the need to modify the simulated plant.\
+\
+\
+ }

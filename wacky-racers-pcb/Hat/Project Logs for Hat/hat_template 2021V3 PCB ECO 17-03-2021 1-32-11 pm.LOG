@@ -1,0 +1,2 @@
+Removed Pin From Net: NetName=JOYSTICK_SW Pin=U1_1-25
+Added Pin To Net: NetName=JOYSTICK_SW Pin=U1_1-41

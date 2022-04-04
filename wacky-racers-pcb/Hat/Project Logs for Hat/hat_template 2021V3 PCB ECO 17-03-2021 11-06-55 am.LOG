@@ -1,0 +1,9 @@
+Change Component Comment : Designator=TP3 Old Comment=3V3 New Comment=TP
+Change Component Comment : Designator=TP1 Old Comment=3V3_E New Comment=3V3
+Change Component Comment : Designator=TP5 Old Comment=3V3_R New Comment=TP
+Change Component Comment : Designator=TP4 Old Comment=V_Batt New Comment=TP
+Added Pin To Net: NetName=5V Pin=C10-2
+Added Pin To Net: NetName=5V Pin=L1-2
+Added Pin To Net: NetName=5V Pin=TP6-1
+Added Pin To Net: NetName=5V Pin=U3_1-5
+Added Room: Name=Hat

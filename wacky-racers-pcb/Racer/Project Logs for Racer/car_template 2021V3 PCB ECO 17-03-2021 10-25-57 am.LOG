@@ -1,0 +1,11 @@
+Removed Pin From Net: NetName=V_BATT_FUSED Pin=J1-1
+Removed Pin From Net: NetName=5V Pin=J1-3
+Removed Member From Class: ClassName=Racer Member=J1
+Added Pin To Net: NetName=V_BATT_FUSED Pin=C1-2
+Added Pin To Net: NetName=V_BATT_FUSED Pin=C2-2
+Added Pin To Net: NetName=V_BATT_FUSED Pin=C4-2
+Added Pin To Net: NetName=V_BATT_FUSED Pin=C5-2
+Added Pin To Net: NetName=V_BATT_FUSED Pin=U1-12
+Added Pin To Net: NetName=V_BATT_FUSED Pin=U2-12
+Added Room: Name=MotorDriver
+Added Room: Name=Racer

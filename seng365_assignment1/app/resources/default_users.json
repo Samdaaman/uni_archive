@@ -1,0 +1,15 @@
+{
+  "properties": ["name", "email", "password", "city", "country", "photo_filename"],
+  "usersData": [
+    ["Eleanor Shellstrop", "e.shellstrop@hotmail.com", "legitsnack", "Phoenix", "USA", "user_1.jpg"],
+    ["Chidi Anagonye", "c.anagonye@stjohns.edu.au", "peepschili", "Sydney", "Australia", "user_2.png"],
+    ["Tahani Al-Jamil", "tahani.aljamil@ox.ac.uk", "outofthespotlight", "London", "UK", "user_3.gif"],
+    ["Jason Mendoza", "boooooortles@hotmail.com", "boooortles", "Jacksonville", "USA", null],
+    ["Mindy St. Claire", "mindystclaire@gmail.com", "password", "Cincinnati", "USA", null],
+    ["Simone Garnett", "s.garnett@stjohns.edu.au", "nwkvcu33krjf", "Sydney", "Australia", null],
+    ["Steven Peleaz", "pillboi@ymail.com", "jacksonville", "Jacksonville", "USA", null],
+    ["Larry Hemsworth", "larryhemsworth@gmail.com", "not_thor", "Sydney", "Australia", null],
+    ["Kamilah Al-Jamil", "kamilah.aljamil@ox.ac.uk", "ismrrhof", null, null, null],
+    ["John Wheaton", "johnwheaton@gmail.com", "gossip", "Los Angeles", "USA", null]
+  ]
+}

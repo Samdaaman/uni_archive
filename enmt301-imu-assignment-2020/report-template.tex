@@ -1,0 +1,75 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{color}
+\usepackage{pgf}
+\usepackage{listings}
+
+\setlength{\oddsidemargin}{0mm}
+\setlength{\evensidemargin}{-14mm}
+\setlength{\marginparwidth}{0cm}
+\setlength{\marginparsep}{0cm}
+\setlength{\topmargin}{2mm}
+\setlength{\headheight}{0mm}
+\setlength{\headsep}{0cm}
+\setlength{\textheight}{240mm}
+\setlength{\textwidth}{168mm}
+\setlength{\topskip}{0mm}
+\setlength{\footskip}{10mm}
+\setlength{\parindent}{8ex}
+
+\newcommand{\comment}[1]{\emph{\color{blue}#1}}
+
+
+\title{ENMT301 IMU Assignment}
+\author{Dag Dastardly}
+\date{}
+
+\begin{document}
+\maketitle
+
+\comment{I am expecting a paragraph for each plot.}
+
+
+
+\section{Raw time sequences}
+
+
+\section{Calibrated time sequences}
+
+
+\section{Histograms}
+
+
+\section{Statistics}
+
+
+\section{Amplitude spectral density}
+
+
+\section{Integrated signals}
+
+
+\section{Differentiated signals}
+
+
+\section{Gyroscope drift}
+
+
+\begin{figure}
+  \input{sinewave.pgf}  
+  \caption{Estimated gyroscope drift.}
+\end{figure}
+
+
+
+\appendix
+\pagebreak
+\section{Filter code}
+
+
+\lstset{language=python}
+\lstset{basicstyle=\ttfamily\small}
+\lstset{keywordstyle=\color{black}\ttfamily}
+\lstinputlisting{sinewave.py}
+
+\end{document}
+

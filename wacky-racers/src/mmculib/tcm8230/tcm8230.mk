@@ -1,0 +1,10 @@
+TCM8230_DIR = $(DRIVER_DIR)/tcm8230
+
+VPATH += $(TCM8230_DIR)
+SRC += tcm8230.c
+
+PERIPHERALS += tc pwm
+DRIVERS += bbi2c
+
+INCLUDES += -I$(TCM8230_DIR)
+

@@ -1,0 +1,19 @@
+image: gcc:latest
+
+build-job:
+  stage: build
+  script:
+    - gcc --version
+    - gcc -O3 -o poisson poisson.c -lpthread
+  artifacts:
+    paths:
+    - poisson
+    expire_in: 1 day
+
+test-job1:
+  stage: test
+  dependencies:
+    - build-job
+  script:
+    - ./poisson -n 7 -i 300 | cmp reference/7.txt
+    - ./poisson -n 15 -i 300 | cmp reference/15.txt

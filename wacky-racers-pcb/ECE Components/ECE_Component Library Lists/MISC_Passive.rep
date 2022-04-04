@@ -1,0 +1,42 @@
+CSV text has been written to file : MISC_Passive.csv
+
+Library Component Count : 35
+
+Name                Description
+----------------------------------------------------------------------------------------------------
+
+BH_SMTU2032-LF      3V Lithium Coin Cell CR2032FH SMD
+CA_1000uF_50V       CAP ALUM 1000uF 50V SMD
+CA_100uF_16V        CAP ALUM 100uF 16V SMD
+CA_100uF_25V        CAP ALUM 100UF 25V 20% SMD
+CA_470uF_16V        CAP ALUM 470uF 16V SMD
+FS_Fuse_0.25A       Fuse 0.25A Very Fast Acting 1206 SMD
+FS_Fuse_0.5A        Fuse 0.5A Very Fast Acting 1206 SMD
+FS_Fuse_1.0A        Fuse 1.0A Very Fast Acting 1206 SMD
+FS_Fuse_2.0A        Fuse 2.0A Very Fast Acting 1206 SMD
+FS_Fuse_5.0A        Fuse 5.0A Very Fast Acting 1206 SMD
+FS_Fuse_PTC_0.3A    FUSE PTC RESETTABLE 0603 SMD 0.1A
+IN_Ferrite-Bead     Ferrite Bead, Rdc 0.3R, Z100MHZ 600R, Imax 1A, SMD 1206
+MC_M2.6_HOLE        Fixing M2.6 Mount Hole NPTH
+MC_M3.0_PCB         PCB Support Adhesive Mount M3.0 Hi-Q PSA
+MC_M3.2_HOLE        Fixing M3.2 Mount Hole NPTH
+MC_M4.0_PCB         PCB Support Adhesive Mount M4.0 Hi-Q PSA
+MC_M4.2_HOLE        Fixing M4.2 Mount Hole NPTH
+RM_100K             Trim Pot SMD 100K Murata PVZ2 Series SMD
+RM_10K              Trim Pot SMD 10K Murata PVZ2 Series SMD
+RM_1K               Trim Pot SMD 1K Murata PVZ2 Series SMD
+RM_1M               Trim Pot SMD 1M Murata PVZ2 Series SMD
+TP_0603             Test Point 1.65X0.9X1.2mm SMD
+TP_0805             Test Point 2.0X0.9X1.2mm SMD
+TP_1206             Test-Point 3.3x1.6x2.1mm SMD
+TP_JUMPER           2.54mm Jumper Thru Hole
+TP_JUMPER_CO        2.54mm Jumper change over, Thru Hole
+WS_EVQPNF05M        Panasonic 6 x 3.5mm SMD Light Touch Switch Type SMD
+WS_FSM2JSMATR       SWITCH TACTILE SPST-NO 0.05A 12V SMD
+WS_KSR211G LFS      SWITCH TACTILE SPST-NO SMD
+WS_SKQUDBE010       4-Direction with Center-push function Nav SW SMD
+WS_SW DIP-2         DIP Switch, 2 Position, SPST SMD
+WS_SW DIP-4         DIP Switch, 4 Position, SPST SMD
+WS_SW-SPST-SIDE     Single-Pole, Side operated Single-Throw Switch SMD
+XT_CRYSTAL_12MHz    12.00 MHZ 18PF HC49/4H SMD
+XT_CRYSTAL_12MHz_18pFCRYSTAL 12MHZ 18PF 6X3.5mm SMD

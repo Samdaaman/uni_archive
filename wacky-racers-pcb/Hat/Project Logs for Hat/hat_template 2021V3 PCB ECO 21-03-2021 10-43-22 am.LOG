@@ -1,0 +1,3 @@
+Removed Pin From Net: NetName=SLEEP Pin=SW1-2
+Removed Pin From Net: NetName=GND Pin=SW1-4
+Removed Member From Class: ClassName=Hat Member=SW1

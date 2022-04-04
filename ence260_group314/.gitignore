@@ -1,0 +1,6 @@
+*.o
+*.hex
+*.bin
+*.out
+/.vscode/
+zz_old*

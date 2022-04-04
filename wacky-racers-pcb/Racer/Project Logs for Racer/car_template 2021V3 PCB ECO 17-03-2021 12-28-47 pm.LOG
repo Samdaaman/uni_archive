@@ -1,0 +1,4 @@
+Change Component Comment : Designator=TP5 Old Comment=R_OUT1 New Comment=R_OUT2
+Change Component Comment : Designator=TP6 Old Comment=R_OUT2 New Comment=R_OUT1
+Added Room: Name=MotorDriver
+Added Room: Name=Racer

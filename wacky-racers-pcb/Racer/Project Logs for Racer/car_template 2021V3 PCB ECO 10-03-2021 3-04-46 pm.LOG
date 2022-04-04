@@ -1,0 +1,4 @@
+Added Pin To Net: NetName=LED_STRIP_5V Pin=U8-3
+Added Pin To Net: NetName=LED_STRIP_3V3 Pin=U8-4
+Added Room: Name=MotorDriver
+Added Room: Name=Racer

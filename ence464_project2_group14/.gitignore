@@ -1,0 +1,14 @@
+poisson
+threads
+
+*.aux
+*.log
+*.out
+cachegrind.out.*
+
+_minted-*/
+
+.vscode/
+__pycache__/
+
+*.o

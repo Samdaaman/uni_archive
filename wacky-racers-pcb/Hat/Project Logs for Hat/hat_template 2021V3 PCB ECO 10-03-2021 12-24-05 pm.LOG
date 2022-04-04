@@ -1,0 +1,15 @@
+Added Pin To Net: NetName=NetC14_2 Pin=U1_1-1
+Added Pin To Net: NetName=GND Pin=U1_1-2
+Added Pin To Net: NetName=NetC14_2 Pin=U1_1-7
+Added Pin To Net: NetName=NetC15_1 Pin=U1_1-8
+Added Pin To Net: NetName=NetC15_1 Pin=U1_1-12
+Added Pin To Net: NetName=GND Pin=U1_1-17
+Added Pin To Net: NetName=NetC14_2 Pin=U1_1-18
+Added Pin To Net: NetName=NetC15_1 Pin=U1_1-24
+Added Pin To Net: NetName=NetC14_2 Pin=U1_1-45
+Added Pin To Net: NetName=GND Pin=U1_1-46
+Added Pin To Net: NetName=NetC15_1 Pin=U1_1-54
+Added Pin To Net: NetName=NetC14_2 Pin=U1_1-58
+Added Pin To Net: NetName=GND Pin=U1_1-60
+Added Pin To Net: NetName=NetC23_1 Pin=U1_1-64
+Added Member To Class: ClassName=Hat Member=Component U1_1 ATSAM4S8BA-ANR

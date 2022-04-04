@@ -1,0 +1,10 @@
+Change Component Designator: OldDesignator=TP1 NewDesignator=TP5
+Change Component Designator: OldDesignator=TP2 NewDesignator=TP6
+Change Component Designator: OldDesignator=TP3 NewDesignator=TP7
+Change Component Designator: OldDesignator=TP4 NewDesignator=TP8
+Change Component Designator: OldDesignator=TP5 NewDesignator=TP1
+Change Component Designator: OldDesignator=TP6 NewDesignator=TP2
+Change Component Designator: OldDesignator=TP7 NewDesignator=TP3
+Change Component Designator: OldDesignator=TP8 NewDesignator=TP4
+Added Room: Name=MotorDriver
+Added Room: Name=Racer

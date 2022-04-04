@@ -1,0 +1,88 @@
+ENME403 3-cart lab data is stored in a MATLAB structure. In
+order to access the data in the MATLAB workspace, you will need
+to do the following.
+
+1.  Load the '.mat' file into MATLAB:
+
+    >> load example.mat
+
+    You may type the name of the resulting workspace variable
+    and hit enter to view the various substructures:
+
+    >> example
+
+    example = 
+
+              X: [1x1 struct]
+              Y: [1x15 struct]
+    Description: [1x1 struct]
+      RTProgram: [1x1 struct]
+        Capture: [1x1 struct]
+
+    The 'X' structure contains timestep data, whilst the the 'Y'
+    structure contains the variables that were captured at each
+    timestep. Lets have a closer look at the variable structure:
+
+    >> example.Y
+
+    ans = 
+
+    1x15 struct array with fields:
+        Name
+        Type
+        Data
+        Unit
+        XIndex
+
+    MATLAB has very conventiently stored the names of the FIFTEEN
+    variables that it captured in the 'Name' field. To see
+    what the variable names are, type the following:
+
+    >> example.Y.Name
+
+    You will get a list of rather terse acronyms in response. The
+    expanded variable names are:
+
+    C1P Cart 1 Position [m]
+    C1P_GAIN Cart 1 Position Gain
+    C1V Cart 1 Velocity [m/s]
+    C1V_GAIN Cart 1 Velocity Gain
+
+    C2P Cart 2 Position [m]
+    C2P_GAIN Cart 2 Position Gain
+    C2V Cart 2 Velocity [m/s]
+    C2V_GAIN Cart 2 Velocity Gain
+
+    C3P Cart 3 Position [m]
+    C3P_GAIN Cart 3 Position Gain
+    C3V Cart 3 Velocity [m/s]
+    C3V_GAIN Cart 3 Velocity Gain
+
+    CMV Cart Motor Voltage [V]
+    PC Cart Position Command [m]
+    RMV Raw Motor Voltage [V]
+
+    Note that CMV is prior to 12V clipping, and RMV is after.
+
+2.  Save the 'X' and 'Y' data into the workspace:
+
+    time_data = example.X(1).Data;
+	
+    C1P = example.Y(1).Data;
+    C1P_GAIN = example.Y(2).Data;
+    C1V = example.Y(3).Data;
+    C1V_GAIN = example.Y(4).Data;
+
+    C2P = example.Y(5).Data;
+    C2P_GAIN = example.Y(6).Data;
+    C2V = example.Y(7).Data;
+    C2V_GAIN = example.Y(8).Data;
+
+    C3P = example.Y(9).Data;
+    C3P_GAIN = example.Y(10).Data;
+    C3V = example.Y(11).Data;
+    C3V_GAIN = example.Y(12).Data;
+
+    CMV = example.Y(13).Data;
+    PC = example.Y(14).Data;
+    RMV = example.Y(15).Data;

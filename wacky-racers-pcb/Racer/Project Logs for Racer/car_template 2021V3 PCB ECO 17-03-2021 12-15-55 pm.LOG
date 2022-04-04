@@ -1,0 +1,14 @@
+Change Component Comment : Designator=TP5 Old Comment=A_OUT1 New Comment=R_OUT1
+Change Component Comment : Designator=TP6 Old Comment=A_OUT2 New Comment=R_OUT2
+Change Component Comment : Designator=TP7 Old Comment=B_OUT1 New Comment=L_OUT1
+Change Component Comment : Designator=TP8 Old Comment=B_OUT2 New Comment=L_OUT2
+Change Component Comment : Designator=TP3 Old Comment=L_OUT1 New Comment=B_OUT1
+Change Component Comment : Designator=TP4 Old Comment=L_OUT2 New Comment=B_OUT2
+Change Component Comment : Designator=TP1 Old Comment=R_OUT1 New Comment=A_OUT1
+Change Component Comment : Designator=TP2 Old Comment=R_OUT2 New Comment=A_OUT2
+Added Member To Class: ClassName=MotorDriver Member=Component TP3 B_OUT1
+Added Member To Class: ClassName=MotorDriver Member=Component TP4 B_OUT2
+Added Member To Class: ClassName=MotorDriver Member=Component TP5 R_OUT1
+Added Member To Class: ClassName=MotorDriver Member=Component TP6 R_OUT2
+Added Room: Name=MotorDriver
+Added Room: Name=Racer

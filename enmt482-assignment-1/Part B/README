@@ -1,0 +1,15 @@
+ENMT482 Particle Filter Assignment
+
+The only files that need editing are demo.py and models.py.  Look for
+the TODOs!  Note, there have been some naming tweaks from previous
+versions to improve the documentation.
+
+Some useful functions can be found in utils.py
+
+The program to run is demo.py.  Spyder provides a nice IDE if you are
+not used to python.
+
+The video shows the operation for a similar particle filter solving
+the localisation problem.  It orients the world differently.
+
+

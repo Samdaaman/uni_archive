@@ -1,0 +1,118 @@
+\documentclass[a4paper, 12pt]{article}
+\input a4size
+
+\title{ENCE461 Schematic Review}
+\author{M.P. Hayes}
+\date{}
+
+\begin{document}
+\maketitle
+
+
+\begin{center}
+\textbf{Bring your schematics, printed on A3 paper}
+\end{center}
+
+
+\section{Common}
+
+\begin{enumerate}
+\item Student names and group number in title block
+
+\item Battery fusing (this is mandatory)
+
+\item Use serial wire debug interface for programming
+
+\item 3.3\,V MCU regulator can be back driven
+
+\item Short circuit protection for MCU pio pins going to external headers
+
+\item Battery voltage monitoring
+
+\item Do the analogue inputs to the MCU exceed 3.3 V?
+
+\item LEDs for debugging
+
+\item Jumpers for mode configuration (radio channel select)
+
+\item Pullup resistors on TWI (I2C) bus
+
+\item Test points
+
+\item Ground test points
+
+\item USB signals are not swapped
+  
+\item USB has series termination resistors (27 ohm)
+
+\item VBUS detection through voltage divider to PIO pin.  This is
+  needed so that the MCU can tell when USB is plugged in or removed.
+  You will also need diodes (or jumpers) so that the USB 5\,V can be
+  connected to the 5\,V from the switching regulator.
+
+\item Power supply filtering for radio (recommend ferrite bead or
+  resistor in series with power rail with parallel capacitor)
+
+\item The radio needs to be connected to SPI pins (MISO/PA12,
+  MOSI/PA13, SCK/PA14)
+
+\item Radio IRQ connected to MCU PIO pin
+
+\item Radio uses SPI clock (SCK) not the TWI clock (TWCK)
+
+\item TWI uses TWCK0/PA4 and TWD0/PA3 or TWCK1/PB5 and TWD1/PB4.
+
+\item SAM4S erase pin on testpoint
+
+\item SAM4S has 12\,MHz crystal
+
+\item Reset button connected to NRST pin
+
+\item Power on/off button connected to WKUPn pin
+
+\item Avoid PB4--PB5 for general I/O (they default to JTAG pins on
+  reset but can be reconfigured in software)
+
+\item Have external pull-down resistors to ensure chips are disabled on
+  power-up
+
+\item Have a few spare PIO pins connected to pads for last minute mods.
+
+\end{enumerate}
+
+
+\section{Hat board}
+
+\begin{enumerate}
+\item Battery can be charged from USB
+
+\item Fall-back option if IMU does not work
+
+\item Nav-switch or joystick for remote control
+
+\item Drive circuit for piezo tweeter
+
+\item IMU nCS pin connected high to enable I2C operation
+
+\item IMU AUX pins not connected  
+  
+\end{enumerate}
+
+\section{Racer board}
+
+
+\begin{enumerate}
+
+\item MOSFET(s) for actuator (if use p-channel MOSFET need transistor
+  to provide sufficient gate voltage to turn MOSFET off)
+
+\item H-bridge driven by four PWM signals (it is best to use PWMHx,
+  note PWMLx and PWMHx are complementary)
+
+\item H-bridge AISEN and BISEN pins connected to ground (unless using
+  current control)
+
+\end{enumerate}
+
+
+\end{document}

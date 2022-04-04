@@ -1,0 +1,9 @@
+Added Component: Designator=U8(SOT23-6_N)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=5V Pin=U8-1
+Added Pin To Net: NetName=GND Pin=U8-2
+Added Pin To Net: NetName=GND Pin=U8-5
+Added Pin To Net: NetName=3V3 Pin=U8-6
+Added Member To Class: ClassName=Racer Member=Component U8 SN74LVC1T45
+Added Room: Name=MotorDriver
+Added Room: Name=Racer

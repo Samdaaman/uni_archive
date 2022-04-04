@@ -1,0 +1,8 @@
+state=0
+vision=0
+sensors=1,2,3,4
+state=1
+vision=1
+sensors=5,5,5,5
+sensors=10,10,10,10
+sensors=30,30,30,30

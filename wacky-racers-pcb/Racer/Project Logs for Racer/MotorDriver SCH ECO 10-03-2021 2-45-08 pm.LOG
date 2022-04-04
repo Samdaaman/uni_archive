@@ -1,0 +1,2 @@
+Remove Pin=U8-3 From Net=LED_STRIP_5V
+Remove Pin=U8-4 From Net=LED_STRIP_3V3

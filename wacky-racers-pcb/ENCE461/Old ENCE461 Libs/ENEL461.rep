@@ -1,0 +1,12 @@
+CSV text has been written to file : ENEL461.csv
+
+Library Component Count : 5
+
+Name                Description
+----------------------------------------------------------------------------------------------------
+
+IN_Ferrite-Bead     Ferrite Bead, Rdc 0.3R, Z100MHZ 600R, Imax 1A, SMD 1206
+SE_ATSAM4S16BA-MU   IC MCU 32BIT 512KB FLASH 64LQFP
+TCM8230MD           Toshiba I2C Camera
+TF_DMN3404L-7       DIODES INC. - DMN3404L-7 - MOSFET,N CH,30V,5.8A,SOT-23
+UN_WT12_Bluetooth   BLUEGIGA - WT12-A-AI - BLUETOOTH MOD, V2.1, CLASS 2, 3MBPS

@@ -1,0 +1,736 @@
+\documentclass[11pt, a4paper]{article}
+\title{Wacky Racers 2021 Instructions}
+\author{Michael Hayes, Ben Mitchell}
+\date{Version 4.2, \today}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage{todonotes}
+\presetkeys{todonotes}{inline}{}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{makecell}
+\usepackage[breaklinks=true]{hyperref}
+\usepackage{tabularx}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage{circuitikz}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+The purpose of this assignment is to design, build, and program an
+embedded system using an ARM microcontroller and surface mount
+technology.
+
+The goal for each group of four students is to build a remote
+controlled vehicle (the Wacky Racer) and its controller (the Wacky
+Hat).  At the conclusion of the assignment there will be a dastardly race!
+
+Each group is comprised of two sub-groups of two students.  One of
+these subgroups constructs the Wacky Racer and the other constructs
+the Wacky Hat.  You may be asking why is the Wacky Hat called the
+Wacky Hat?  Well, a hat that controls a remote vehicle using head
+motions is not an ordinary hat!
+
+
+\section{Requirements}
+
+The following requirements are mandatory if you wish to maximise your
+marks.
+
+
+\subsection{Wacky racer}
+
+\begin{enumerate}
+\item The chassis is to be constructed by each group.  These can be 3-D printed,
+  constructed from Perspex or wood, etc.  A standard chassis is available from
+  the Electronics Lab technician (Diego Ramirez).  The electronics must be
+  visible on top of the chassis.
+\item Have a standard working bump sensor (supplied).
+\item Locomotion can only use two 6\,V DC motors (supplied).
+\item Everything must be powered from a single 5-cell NiMH battery pack (supplied).
+\item Use a single four layer printed circuit board of dimension 85\,mm$\times$64\,mm.
+\item Use an ARM microcontroller (Atmel SAM4S8).
+\item Drive the motors using H-bridges (Texas Instruments DRV8833 dual
+  H-bridge is recommended).
+\item Regulate the nominal battery voltage to 5\,V with a buck
+  regulator IC (ADP2302ARDZ-50).
+\item Be decorated with an LED tape (supplied) controlled by the MCU.
+\item Use a USB interface for debugging.
+\item Use a serial wire debug interface for MCU programming/debugging.
+\item Have adequate battery fusing and reverse polarity protection.
+\item Have a sleep button.
+\item If the battery voltage drops below 5\,V, an LED should flash and high power draw devices should be disabled.
+\item Interface to the Wacky Hat with a Nordic nRF24 SMD radio module.
+\item Have four jumper selectable radio channels.
+\item Have a mounted RFID card (supplied) that can be read by the Wacky ramps.
+\item Be humorous.
+\end{enumerate}
+
+
+Each Wacky Racer can have a dastardly means of hindering another
+team's Wacky Racer.  However, you cannot:
+%
+\begin{itemize}
+\item Damage or destroy another Wacky racer
+\item Damage the venue
+\item Injure a spectator
+\item Jam the radio signals
+\end{itemize}
+
+
+\vspace{1cm}
+
+\begin{figure}[h]
+    \centering
+    \input{racer_top_level.tex}
+    \caption{Racer board top level diagram.}
+\end{figure}
+
+
+\vfill\pagebreak
+
+\subsection{Wacky hat}
+
+
+\begin{enumerate}
+\item Construct a Wacky Hat that contains all the electronics.
+\item Everything must be powered from a single 5-cell NiMH battery pack (supplied).
+\item Have adequate battery fusing and reverse polarity protection.
+\item Use a single four layer printed circuit board of dimension 85\,mm$\times$64\,mm.
+\item Use an ARM microcontroller (Atmel SAM4S8).
+\item Regulate the nominal 6\,V battery voltage to 5\,V with a buck
+  regulator IC (ADP2302ARDZ-50).
+\item Be decorated with an LED tape (supplied) controlled by the MCU.
+\item Use an I2C IMU (MPU-9250) for head motion detection.
+\item Use a USB interface for debugging.
+\item Use a serial wire debug interface for MCU programming/debugging.
+\item Have a joystick in case the IMU does not work.
+\item Have a sleep button.
+\item If the battery voltage drops below 5\,V, an LED should flash and high power draw devices should be disabled.
+\item Play sound when the bumper is hit.
+\item Interface to the Wacky Racer with a Nordic nRF24 SMD radio module.
+\item Have four jumper selectable radio channels.
+\item Be humorous.
+\end{enumerate}
+
+%\vspace{1cm}
+
+\begin{figure}[h]
+  \centering
+  \input{hat_top_level.tex}
+  \caption{Racer hat top level diagram.}
+\end{figure}
+
+
+\pagebreak
+
+\section{Assignment schedule}
+
+The planned activities for the timetabled labs in the Embedded Systems
+Lab (ESL) are:
+%
+\begin{flushleft}
+  \begin{tabular}{ c l l }
+    Week            &  Assistance  &  Assessment \\
+    \hline \hline
+    T1-1 & Altium tutorial 1 (schematics)  & \\
+    T1-2 & Altium help      & Schematic submission for review (Friday 5pm) \\
+    T1-3 & Schematic review & \\
+    T1-4 & Altium tutorial 2 (PCB) &          \\
+    T1-5 & Altium help      & PCB submission 1    \\
+    T1-6 & Altium help      & PCB submission 2    \\
+    \hline
+    B-1  & (break)          &                   \\
+    B-2  & (break)          &                   \\
+    B-3  & (break)          &                   \\
+    \hline
+    T2-1 & General          &                   \\
+    T2-2 & General          & Blinky            \\
+    T2-3 & General          & IMU/motors        \\
+    T2-4 & General          & Radio control     \\
+    T2-5 & General          & Functionality     \\
+    T2-6 & Competition      & Competition, critique  \\
+  \end{tabular}
+\end{flushleft}
+
+
+Notes:
+%
+\begin{enumerate}
+\item There there may be a 6--10 day delay for the PCBs to be
+  manufactured from the time of submission.  You will then need to
+  book an assembly session in the SMT lab provided you have done the
+  SMT lab induction.
+
+\item Do not underestimate the blinky milestone.  It requires having a
+  functional PCB with a microcontroller that turns on properly, a
+  functional toolchain and the ability to download code into the
+  microcontroller's flash memory.
+\end{enumerate}
+
+
+\section{Assessment}
+
+The marks breakdown (max. 0x64) is:
+%
+\begin{flushleft}
+  \begin{tabular}{ll}
+    PCB submission & 0--0xa marks\\
+    Blinky milestone  & 0x5 marks\\
+    IMU/motor milestone  & 0x5 marks\\
+    Radio control milestone  & 0x5 marks\\
+    Functional assessment & 0--0x14 marks \\
+    Board inspection & 0--0x1e marks \\
+    Competition & 0--0xa marks \\
+    Individual critique & 0--0xf marks \\
+  \end{tabular}
+
+\end{flushleft}
+
+\subsection{Milestones}
+
+There are five milestones.  To achieve the associated marks, they must
+be demonstrated to a T.A. by the end of the lab for your allotted
+stream.  If you need an exception to this, see Ben Mitchell with a
+\emph{very} good reason.  The milestone requirements are:
+%
+\begin{description}
+\item [Schematic review] Submit your A3 schematic on Learn for
+  review.  Lose 10 marks if you miss the submission time.
+
+\item [PCB submission] Submit your PCB design to Learn for
+  manufacture.  To encourage early submission there is a sliding scale
+  for marks depending on when the PCB is submitted, see table.  After
+  week 6, there is a 10 mark penalty per week.  \textbf{NB, a rushed
+    PCB design will cause you more grief, more PCB rework, and a lower
+    mark for the inspection.}
+
+  \begin{tabular}{llll}
+    Week & Submission day & Cut-off time  & Mark \\ \hline
+    5    & Monday       & 1.00 pm & 10 \\
+    5    & Tuesday      & 1.00 pm & 9 \\
+    5    & Wednesday    & 1.00 pm & 8 \\
+    5    & Thursday     & 1.00 pm & 7 \\
+    5    & Friday       & 1.00 pm & 6 \\
+    6    & Monday       & 1.00 pm & 5 \\
+    6    & Tuesday      & 1.00 pm & 4 \\
+    6    & Wednesday    & 1.00 pm & 3 \\
+    6    & Thursday     & 1.00 pm & 2 \\
+    6    & Friday       & 1.00 pm & 1  \\
+  \end{tabular}
+
+\item [Blinky] Demonstrate that can blink an LED controlled by the SAM4S.
+
+\item [IMU/motors] For the Wacky Hat, demonstrate output of IMU
+  readings to a PC using USB CDC.  For the Wacky Racer, demonstrate
+  control of the motors from a PC using USB CDC.
+
+\item[Radio control] Demonstrate sending commands from the Wacky Hat
+  to the Wacky Racer over a radio link.
+\end{description}
+
+\textbf{If you cannot show the functionality of a previous milestone
+  during any assessment, you will fail that assessment and loose any
+  marks from the previous milestone.}
+
+
+\subsection{Functionality assessment}
+
+Functionality requirements:
+%
+\begin{flushleft}
+  \begin{tabular}{l|l}
+    Wacky racer & Wacky hat \\ \hline \hline
+    Blink LED                      & Blink LED \\
+    Drive motors forward/backward  & Read from IMU \\
+    Speed control of motors        & Calculate speeds from IMU \\
+    Steering control               & Joystick control \\
+    Receive radio message          & Send radio message \\
+    Jumper selectable radio channel & Jumper selectable radio channel  \\
+    Dies on bump                   & Plays sound on bump \\
+    Low voltage indication         & Low voltage indication \\
+  \end{tabular}
+\end{flushleft}
+%
+Marks are allocated on how well things work.  Up to 5 bonus marks can
+be awarded for extra functionality such as:
+%
+\begin{flushleft}
+  \begin{tabular}{l|l}
+    Wacky racer                & Wacky hat \\ \hline \hline
+    Dastardly stuff            & Plays interesting sounds \\
+    Sleep mode                 & Sleep mode \\
+  \end{tabular}
+\end{flushleft}
+
+
+\subsection{Competition}
+
+The competition is a race around an obstacle course.  Marks will be
+awarded every time you pass over a Wacky Ramp in the correct order.
+These ramps have an RFID card reader that will detect your Racer if
+you have correctly fitted an RFID card.  The Wacky Ramps change colour
+when they detect a Wacky Racer.
+
+To be awarded any marks for the race:
+%
+\begin{enumerate}
+\item Your vehicle must stop for at least 5\,s if the bumper is hit.
+
+\item Your vehicle must be controlled by motions of the Wacky hat
+  sitting on someone's head.
+\end{enumerate}
+
+
+\subsection{PCB inspection}
+
+This is assessed after the competition.  The categories are:
+%
+\begin{enumerate}
+\item Layout (component placement etc.)
+\item Construction (tidiness, rework, etc.)
+\item Testability
+\item Power supplies (routing, decoupling, etc.)
+\end{enumerate}
+
+
+
+\section{Technical stuff}
+
+Read this section carefully.  There are clues as to how we mark your PCBs at the
+end of the assignment.
+
+
+\subsection{External components}
+
+\subsubsection{Battery}
+
+The battery we provide for the assignment is a 5-cell NiMh battery with a
+\emph{nominal} voltage of \SI{6.0}{\volt}. This battery uses a standard RC servo
+connector: 3 pin 0.1'' (pin 1 GND, pin 2 5V, pin 3 NC). We suggest connecting
+both the first and third pins to ground to allow the battery to be plugged in
+in both orientations. The 461 Altium library has a component named
+`Battery\_HEADER\_3pin' that is suitable to use.
+
+\subsubsection{Radio}
+
+The nRF24 module we provide is actually a tiny PCB with all of the high
+frequency analogue components populated for you. This module breaks out the SPI
+communication pins, the power supply pins, and two signal pins that you will
+need to connect to your microcontroller. The CE and IRQ pins can both go to
+general PIO pins while the SPI pins (MOSI, MISO, SCLK, CSN) need to be connected
+to the SAM4S SPI peripheral.
+
+As this radio is ultimately an analogue circuit and any noise on the power
+supply can affect the signal quality, we recommend using a separate 3V3
+regulator and using a low pass filter to provide the best power.
+
+\begin{figure}[h]
+  \centering
+  \begin{circuitikz}
+    \draw (-1, 0) node[left] {\SI{3.3}{\volt}} to[R=\SI{1}{\ohm}, o-] (2, 0)
+    to[C=\SI{10}{\micro\farad}, *-*] (2, -2); 
+    
+    \draw (-1, -2) node[left] {GND} to[short, o-] (2, -2); 
+    \draw (2, 0) to[short] (4, 0); 
+    \draw (2, -2) to[short] (4, -2); 
+    \draw (6, 0.5) -- (4, 0.5) -- (4, -2.5) -- (6, -2.5);
+    \node[right=0.2] at (4, 0) {VCC}; 
+    \node[right=0.2] at (4, -2) {GND}; 
+    \node at (6, -1) {nRF24};
+  \end{circuitikz}
+\end{figure}
+
+\subsubsection{LED Tape}
+
+The LED tape is a string of WS2812 LEDs connected in a line. These LEDs use a
+clever mechanism to pass the RGB data down the string. They are connected in
+series like:
+
+\begin{figure}[h]
+  \centering
+  \begin{circuitikz}
+    
+    \draw (0, 0) node[left] {\SI{5}{\volt}} to[short, o-] (13, 0);
+    \draw (0, -4) node[left] {GND} to[short, o-] (13, -4);
+
+    \draw (1, -1) rectangle (4, -3);
+    \draw (5, -1) rectangle (8, -3);
+    \draw (9, -1) rectangle (12, -3);
+
+    \draw (0, -2) node[left] {DIN} to[short, o-] (1, -2) node[right] {DIN};
+    \draw (4, -2) node[left] {DOUT} -- (5, -2) node[right] {DIN};
+    \draw (8, -2) node[left] {DOUT} -- (9, -2) node[right] {DIN};
+    \draw (12, -2) node[left] {DOUT} -- (13, -2);
+
+    \draw (2.5, 0) -- (2.5, -1) node[below] {VCC};
+    \draw (6.5, 0) -- (6.5, -1) node[below] {VCC};
+    \draw (10.5, 0) -- (10.5, -1) node[below] {VCC};
+
+    \draw (2.5, -4) -- (2.5, -3) node[above] {GND};
+    \draw (6.5, -4) -- (6.5, -3) node[above] {GND};
+    \draw (10.5, -4) -- (10.5, -3) node[above] {GND};
+
+  \end{circuitikz}
+\end{figure}
+
+This means you will need to provide a three pin header (0.1" standard header)
+with the pinout: pin 1 \SI{5}{\volt}, pin 2 signal, pin 3 ground. Each
+individual LED has a maximum supply current of \SI{60}{\milli\ampere}
+(\SI{20}{\milli\ampere} per red, green, blue channel). We will provide up to
+half a metre of LED tape to each car or hat, giving a maximum number of 30 LEDs
+to be driven.
+
+
+\subsubsection{Bumper}
+
+The provided bumper senses the contact through a simple limit switch. This
+switch is normally open and on contact will close.
+
+\begin{figure}[h]
+  \centering
+  \begin{circuitikz}
+    
+    \draw (0, 0) to[short, o-*] (2, 0) to[switch] (2, -2) node[ground]{};
+    \draw (2, 0) to[R] (2, 2) node[vcc]{\SI{3.3}{\volt}};
+
+    \draw[blue, dashed] (1.5, -0.5) rectangle (2.5, -1.5);
+    \node[blue, right] at (2.5, -1) {limit switch};
+
+  \end{circuitikz}
+\end{figure}
+
+Note that the pullup resistor shown could simple be the internal pullup resistor
+on a PIO pin. The connector for the limit switch should be a simple 2 pin 0.1"
+header. 
+
+\subsubsection{Buzzer}
+
+The buzzers supplied are passive piezo-electric devices. Applying a voltage
+across the two terminals causes the element to deform. Applying an alternating
+current to the device generates an audible tone. The larger the applied voltage
+differential, the louder the tone becomes. There are plenty of example circuits
+for piezo buzzers available online.
+
+\subsubsection{Motors}
+
+The motors available in the provided chassis are \SI{6}{\volt} DC motors. These
+have a low DC resistance and will take as much current as the DRV8833 motor
+driver can supply. You need to add connectors for the motors, either 2 pin 0.1"
+headers or screw terminals are suggested.
+
+
+
+\subsection{Version control}
+
+Use version control for everything, or else!  Learning git is frustrating but is
+a skill you will not regret.
+
+Your group leader should create a forked copy of the wacky-racers git project
+and then add the other group members to the project.  This can be done by:
+
+\begin{enumerate}
+\item Go to \url{https://eng-git.canterbury.ac.nz/wacky-racers/wacky-racers}
+
+\item Click `Fork' button.  This will create a copy of the main repository for the project.
+
+\item Click on the `Settings' menu then click the `Expand' button for
+`Sharing and permissions'.  Change `Project Visibility' to `Private'.
+
+\item Click on the `Members' menu and add group members as Developers.
+
+\item Using a bash terminal (or other useful shell), enter the command:
+
+\lstset{language=bash}
+\lstset{basicstyle=\ttfamily\small}
+\lstset{keywordstyle=\color{black}\ttfamily}
+\lstset{breaklines}
+
+\begin{lstlisting}
+  $ git clone https://eng-git.canterbury.ac.nz/your-userid/wacky-racers.git
+\end{lstlisting}
+
+If you do not want to have to enter your password for every git
+push/pull operation, you should set up ssh-keys and use the git URL instead:
+
+\begin{lstlisting}[breaklines]
+  $ git clone git@eng-git.canterbury.ac.nz:your-userid/wacky-racers.git
+\end{lstlisting}
+
+\item Add a remote URL for the main repository.
+%
+\begin{lstlisting}[breaklines]
+  $ cd wacky-racers
+  $ git remote add upstream https://eng-git.canterbury.ac.nz/wacky-racers/wacky-racers.git
+\end{lstlisting}
+%
+Again if you do not want to manually enter your password, you can use:
+%
+\begin{lstlisting}[breaklines]
+  $ cd wacky-racers
+  $ git remote add upstream git@eng-git.canterbury.ac.nz:wacky-racers/wacky-racers.git
+\end{lstlisting}
+
+\item If we add more demo code or tweak the instructions in the main
+repository, you can get the updated stuff using:
+%
+\begin{lstlisting}[breaklines]
+  $ git pull upstream master
+\end{lstlisting}
+\end{enumerate}
+
+
+\subsection{Components}
+
+\begin{enumerate}
+\item We recommend that you use components in the ECE Altium library.
+  These are stocked in the SMT lab.  For any other components you may
+  require, see Scott Lloyd in the SMT lab.
+
+\item The Wacky Racer batteries are Turnigy 5-cell 6\,V, 2300\,mAh,
+  NiMH with a three pin JST connector.  To preserve the battery life
+  it is imperative to not draw current when the battery voltage is
+  below 5\,V.  Note, when fully charged, the battery voltage may be 7.5\,V.
+\end{enumerate}
+
+
+\subsection{Connectors}
+
+\begin{enumerate}
+\item USB micro or mini connector for debugging
+\item 3 pin 0.1'' for LED tape (pin 1 5\,V, pin 2 signal, pin 3 ground)
+\item 2 pin 0.1'' for bumper (pin 1 switch, pin 2 ground)
+\item 10 pin IDE for serial wire debug
+\item 3 pin JR battery connector (pin 1 GND, pin 2 VBAT, pin 3 GND)
+\item motor connectors (for Racer)
+\item connectors for dastardly stuff
+\end{enumerate}
+
+
+\subsection{Schematics}
+
+\begin{enumerate}
+\item Have a look at the
+  \href{http://ecewiki.elec.canterbury.ac.nz/mediawiki/index.php/ENCE461_Altium_tutorial}{Altium
+    tutorial on ecewiki}.
+
+\item Have a read of the
+  \href{http://ecewiki.elec.canterbury.ac.nz/mediawiki/index.php/Schematic_guidelines}{schematic
+    guidelines on ecewiki}.
+
+\item Add you and your partner's name and your group number to the
+  title block on your schematic.
+
+\item Save PDF files of your schematics in your source repository.
+  \textbf{Note, when debugging your PCBs, we will not help you until
+    you show us your printed A3 schematic}.
+
+\item We bet that you will not have enough test points to clip an oscilloscope
+  probe to.  Do not think you can hold the probe tip against an MCU pin.  Ensure
+  you give a meaningful name to the test point in its comment field.  A ground
+  test point is essential for an oscilloscope earth clip. Keep this clear of
+  other test points since the clip may short against them.  You will probably
+  require at least two ground points.
+
+\item Checking the schematic is the most crucial part of the
+  assignment.  If the schematic is wrong then your PCB will be wrong.
+  So, schematics must be thoroughly checked by another person.
+
+\item Consider fall-back options if you have a problem with your PCB.
+
+  The IMU for the Wacky Hat is tiny and we \textbf{strongly recommend} that you
+  provide an alternative connector for connecting the following IMU module:
+  \href{https://www.aliexpress.com/item/SPI-IIC-MPU9250-MPU-9250-MPU-9250-9-Axis-Attitude-Gyro-Accelerator-Magnetometer-Sensor-Module-MPU9250/32216818498.html?spm=a2g0s.9042311.0.0.WKvtEm}{MPU-9250 on AliExpress}
+
+  Similarly for the Wacky Racer, in case the H-bridge fails, provide two
+  three-pin servo connectors so that external Electronic Speed
+  Controllers (ESC) can be used to drive the motors.
+
+\item It would be useful to have a jumper or two connected to a PIO
+  pin so that you can configure your board.  For example, if a jumper
+  is in, use the joystick, otherwise use the IMU.
+
+\end{enumerate}
+
+
+\subsection{PCBs}
+
+\begin{enumerate}
+\item Your four-layer PCBs are going to be manufactured in batches.
+  There is at least a week turnaround time to get the boards made.
+
+\item It is important that you check footprints for parts they you
+  create.  We will impose a 10\% penalty for each rerun of a PCB, say
+  due to a footprint mistake.  Get your partner to check.
+
+\item Turn of the test point designators and turn on comments instead. This lets
+  you give them human readable names to make your lives easier.
+
+\item PCB layouts must be thoroughly checked by another person.
+
+\item A PCB track can blow faster than a fuse. So keep high current
+  tracks fat and short.
+
+\item Clearly mark the positive and negative battery connections on
+  the silk screen.
+
+\item Some of the chips can get hot so thermal considerations are
+  required.  Follow the manufacturers' guidelines in the datasheets.
+
+\item The switching regulators can interfere with the radios.
+
+\item Use a design rule check to see if any of the following
+  constraints are violated:
+%
+\begin{itemize}
+\item Minimum trace width (0.15\,mm)
+\item Minimum trace clearance (0.15\,mm)
+\item Minimum via size (0.3\,mm hole, 0.6\,mm outer diameter)
+\item Minimum hole size (0.3\,mm)
+\item Minimum annular ring (0.1\,mm)
+\end{itemize}
+%
+For every violation of one these rules, we will deduct 1\% from your
+final mark.
+
+\item Check the
+  \href{http://ecewiki.elec.canterbury.ac.nz/mediawiki/index.php/PCB_checklist}{PCB
+    checklist on ecewiki} before submission.
+\end{enumerate}
+
+
+\subsection{Assembly}
+
+\begin{enumerate}
+\item Finding shorts is extremely frustrating so maximise clearances
+  and test for shorts before populating components.
+
+\item Components can be put through the oven on the reverse side
+  although heavy components may need to be glued.
+
+\item Never assume where pin 1 is on an IC; check the datasheet.
+  5--10\% of groups will get this wrong.
+
+\end{enumerate}
+
+
+\subsection{Software}
+
+\begin{enumerate}
+\item We highly recommend using a personal laptop with Linux installed if
+  possible. A virtual machine running Linux on Windows is acceptable for this.
+  You will need to check instructions on ecewiki for how to install the required
+  toolchain. We advise against using the Windows Subsystem for Linux, rather it
+  is much simpler to fix issues when you just use an actual Linux.
+
+\item Development on Windows is now possible thanks to Philipp Hoff, however,
+  neither MPH, nor Ben can help with debugging the Windows toolchain.
+
+\item If you are not using version control for this you are foolish.
+
+\item Inspect MPH's sample code.
+
+\end{enumerate}
+
+
+\subsection{Programming}
+
+\begin{enumerate}
+\item If you are trying to program the SAM4S for the first time and
+  are feeling tired or impatient, then do something else.
+
+\item For the first program, do not use batteries or a USB connection.
+  The ST-Link adapter will provide 3.3\,V to the MCU.
+
+\item Detailed instructions can be found at
+  \url{http://ecewiki.elec.canterbury.ac.nz/mediawiki/index.php/Wacky_racers_software}.
+\end{enumerate}
+
+
+\subsection{Debugging}
+
+\begin{enumerate}
+\item Start running small programs (such as the provided demo
+  programs) to test each feature separately.
+
+\item An oscilloscope is your friend.
+
+\item It is possible to use the GDB debugger but you need to know what
+  you are doing, especially with optimised code.
+
+\item Drawing a diagram of what you think is happening is highly recommended. A
+simple circuit diagram or timing diagram will often help you realise what you
+have missed and let you fix it without asking for help.
+
+\end{enumerate}
+
+
+\subsection{Possibly asked questions with answers}
+
+\begin{itemize}
+\item \emph{Why use the SAM4s MCU?}  For this application most MCUs
+  would suffice, even an 8-bit AVR microcontroller.  To level the
+  playing field, I have chosen a MCU most students would not have used
+  before.  This is an ARM based MCU made by Atmel I have used this in
+  a number of projects.  Indeed we used to teach this chip in ENCE361.
+  There are many other similar MCUs made by different manufacturers
+  such as the STM32 that would just as suitable.
+
+\item \emph{Why use a four layer PCB?}  Come to lectures to find out!
+
+\item \emph{Why use 7.2\,V NiMH batteries for the Wacky Racers?}
+  These were a legacy of previous Wacky Racers.  They are also safer
+  than lithium batteries with sleep-deprived students.
+
+%% \item \emph{Why can't I program my device using Windows?} Due to
+%%   various aspects of the Windows ecosystem, setting up a fully
+%%   functional build environment is more complicated, will often vary
+%%   from machine to machine, will often break filepaths, and will often
+%%   cause bizarre compilation errors. Use at your own risk, we will not
+%%   assist in debugging issues related to Windows.
+
+\end{itemize}
+
+
+\section{Assistance}
+
+
+\begin{itemize}
+\item Emails to the lecturers (except of a personal nature) will be
+  quietly ignored.
+
+\item Questions anwered on the ENCE461 Learn discussion page will be
+  promptly answered.
+
+\item All decisions regarding legality of your dastardly devices are
+  at the whim of Ben Mitchell.  You can email Ben at
+  \href{mailto://ben.mitchell@pg.canterbury.ac.nz}{ben.mitchell@pg.canterbury.ac.nz} if you wish to keep your ideas secret.
+
+\item TAs will be available in the scheduled lab times.  Priority will
+  be given to groups assigned to the current lab session. \textbf{We will
+  only provide assistance to students who have a printed A3 schematic
+  sheet in front of them and have already tried looking up the problem
+  on \url{https://ecewiki.elec.canterbury.ac.nz}}.
+
+\item Questions pertaining to Altium and surface mount rework will be
+  answered by Scott Lloyd (SMT Lab technician) and Diego Ramirez
+  (Electronics Lab technician).
+
+\item Michael Hayes is really busy pulling all the string behind the
+  scenes and so will only help with gnarly problems referred to by the
+  TAs!
+
+\end{itemize}
+
+\end{document}

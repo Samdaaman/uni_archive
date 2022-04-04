@@ -1,0 +1,900 @@
+openapi: 3.0.0
+info:
+  title: 'SENG365 2020: Petition Site API'
+  version: 1.0.0
+  description: >-
+    This specification documents the API that must be implemented for Assignment
+    1.
+
+
+    The API provides all of the server-side functionality necessary in order to
+    implement the user stories for Assignment 2.
+servers:
+  - url: 'http://csse-s365.canterbury.ac.nz:4001/api/v1'
+    description: reference server
+tags:
+  - name: Backdoor
+    description: Development-only endpoints for resetting and resampling the database.
+  - name: petitions
+    description: 'Endpoints for retrieving, creating, modifying, and deleting petitions.'
+  - name: petitions.photos
+    description: Endpoints for retrieving and uploading petition hero images.
+  - name: petitions.signatures
+    description: 'Endpoints for retrieving, adding, and deleting signatures for petitions.'
+  - name: users
+    description: >-
+      Endpoints for registering, logging in, and retrieving/modifying user
+      information.
+  - name: users.photos
+    description: 'Endpoints for retrieving, uploading, and deleting user profile photos.'
+paths:
+  /petitions:
+    get:
+      tags:
+        - petitions
+      summary: View petitions.
+      description: >-
+        By default, the petitions should be sorted by the number of signatures
+        descending (highest to lowest).
+
+
+        The list should be filtered, then sorted, then paginated using
+        `startIndex` and `count`.
+      parameters:
+        - in: query
+          name: startIndex
+          description: Number of items to skip before returning results.
+          schema:
+            $ref: '#/components/schemas/PetitionSearchRequest/properties/startIndex'
+        - in: query
+          name: count
+          description: Number of items to include in results.
+          schema:
+            $ref: '#/components/schemas/PetitionSearchRequest/properties/count'
+        - in: query
+          name: q
+          description: Only include petitions that have the search term within their title.
+          schema:
+            $ref: '#/components/schemas/PetitionSearchRequest/properties/q'
+        - in: query
+          name: categoryId
+          description: "Only include petitions of this category (id).\n\nOnly IDs that map to categories are allowed."
+          schema:
+            $ref: '#/components/schemas/PetitionSearchRequest/properties/categoryId'
+        - in: query
+          name: authorId
+          description: >-
+            Only include petitions that have the given user (id) as their
+            author.
+          schema:
+            $ref: '#/components/schemas/PetitionSearchRequest/properties/authorId'
+        - in: query
+          name: sortBy
+          description: >-
+            Sort the petitions by the given property, according to the following
+            rules:
+
+            * ALPHABETICAL_ASC: alphabetically by title, A - Z
+
+            * ALPHABETICAL_DESC: alphabetically by title, Z - A
+
+            * SIGNATURES_ASC: the number of signatures, from least to most
+
+            * SIGNATURES_DESC: the number of signatures, from most to least
+
+
+            Note: how ties (e.g. two petitions with 10 signatures each) are
+            decided is undocumented behaviour, although it should be consistent
+            each time.
+          schema:
+            $ref: '#/components/schemas/PetitionSearchRequest/properties/sortBy'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PetitionOverview'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - petitions
+      summary: Add a new petition.
+      description: >-
+        The closing date `closingDate` must be in the future, and `categoryId`
+        must reference an existing category.
+      security:
+        - UserToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: CreatePetitionRequest
+              properties:
+                title:
+                  $ref: '#/components/schemas/PetitionOverview/properties/title'
+                description:
+                  $ref: '#/components/schemas/Petition/properties/description'
+                categoryId:
+                  $ref: '#/components/schemas/Category/properties/categoryId'
+                closingDate:
+                  $ref: '#/components/schemas/DateTimeInput'
+              required:
+                - title
+                - description
+                - categoryId
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                properties:
+                  petitionId:
+                    $ref: >-
+                      #/components/schemas/PetitionOverview/properties/petitionId
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  '/petitions/{id}':
+    parameters:
+      - name: id
+        description: ID of the petition.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/PetitionOverview/properties/petitionId'
+    get:
+      tags:
+        - petitions
+      summary: Retrieve detailed information about a petition.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Petition'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    patch:
+      tags:
+        - petitions
+      summary: Change a petition's details.
+      description: >-
+        Only accessible to the author of the petition. The closing date
+        `closingDate` must be in the future, and `categoryId` must reference an
+        existing category.
+
+        Not accessible after the petition has closed (i.e. the closing date is
+        in the past).
+      security:
+        - UserToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: ChangePetitionDetailsRequest
+              properties:
+                title:
+                  $ref: '#/components/schemas/PetitionOverview/properties/title'
+                description:
+                  $ref: '#/components/schemas/Petition/properties/description'
+                categoryId:
+                  $ref: '#/components/schemas/Category/properties/categoryId'
+                closingDate:
+                  $ref: '#/components/schemas/DateTimeInput'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - petitions
+      summary: Delete a petition.
+      description: >-
+        Only accessible to the author of the petition. All signatures for the
+        petition will also be deleted.
+      security:
+        - UserToken: []
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /petitions/categories:
+    get:
+      tags:
+        - petitions
+      summary: Retrieve all data about petition categories.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        '500':
+          description: Internal Server Error
+  '/petitions/{id}/photo':
+    parameters:
+      - name: id
+        description: ID of the petition.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/PetitionOverview/properties/petitionId'
+    get:
+      tags:
+        - petitions.photos
+      summary: Retrieve a petition's hero image.
+      description: >-
+        The response MIME type will be either `image/png`, `image/jpeg`, or
+        `image/gif`, depending on the file type of the image being retrieved.
+      responses:
+        '200':
+          description: OK
+          content:
+            image:
+              schema:
+                $ref: '#/components/schemas/BinaryImageFile'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - petitions.photos
+      summary: Set a petition's hero image.
+      description: >-
+        Only accessible to the author of the petition. If the petition already
+        has a hero image, the current hero image will be replaced with it, and a
+        200 OK response will be sent. If not, a 201 Created response will be
+        sent.
+
+
+        If the file is a `.png`, the request will be sent with `Content-Type:
+        image/png`. If the file is a `.jpeg` or `.jpg`, the request will be sent
+        with `Content-Type: image/jpeg`. If the file is a `.gif`, the request
+        will be sent with `Content-Type: image/gif`.
+
+
+        The request body should contain the raw binary content of the photo,
+        i.e. it should not be in `multipart/form-data` format or contain any
+        file metadata. 
+      security:
+        - UserToken: []
+      requestBody:
+        content:
+          image/png:
+            schema:
+              $ref: '#/components/schemas/BinaryImageFile'
+          image/jpeg:
+            schema:
+              $ref: '#/components/schemas/BinaryImageFile'
+          image/gif:
+            schema:
+              $ref: '#/components/schemas/BinaryImageFile'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  '/petitions/{id}/signatures':
+    parameters:
+      - name: id
+        description: ID of the petition.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/PetitionOverview/properties/petitionId'
+    get:
+      tags:
+        - petitions.signatures
+      summary: Retrieve a petition's signatures.
+      description: >-
+        The signatures are returned in chronological order (from earliest to
+        latest).
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Signature'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - petitions.signatures
+      summary: Sign a petition.
+      description: >-
+        A user cannot sign a petition they have already signed, or a petition
+        that has closed.
+      security:
+        - UserToken: []
+      responses:
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - petitions.signatures
+      summary: Remove a signature from a petition.
+      description: >-
+        A user cannot remove a signature from a petition they haven't signed,
+        from a petition they created, or from a petition that has closed.
+      security:
+        - UserToken: []
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /users/register:
+    post:
+      tags:
+        - users
+      summary: Register as a new user.
+      description: >-
+        The email must be syntactically valid (e.g. it has to include an `@`,
+        but whether or not it is actually a registered email address will not be
+        checked). The email address must not already be in use. The password
+        must not be empty. Note that the city and country are both optional.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: RegisterUserRequest
+              properties:
+                name:
+                  $ref: '#/components/schemas/User/properties/name'
+                email:
+                  $ref: '#/components/schemas/User/properties/email'
+                password:
+                  $ref: '#/components/schemas/FullUser/properties/password'
+                city:
+                  $ref: '#/components/schemas/User/properties/city'
+                country:
+                  $ref: '#/components/schemas/User/properties/country'
+              required:
+                - name
+                - email
+                - password
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                properties:
+                  userId:
+                    $ref: '#/components/schemas/FullUser/properties/userId'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /users/login:
+    post:
+      tags:
+        - users
+      summary: Log in as an existing user.
+      description: >-
+        The response will contain a (unique) randomly-generated token that the
+        client-side should store. 
+
+
+        Whenever the client makes a request that requires authentication, it
+        should provide that same token as the value of the `X-Authorization`
+        header in the request. 
+
+
+        The server will compare this to the value it has stored in the database
+        to authenticate that request.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: LoginRequest
+              properties:
+                email:
+                  $ref: '#/components/schemas/User/properties/email'
+                password:
+                  $ref: '#/components/schemas/FullUser/properties/password'
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: LoginSuccessResponse
+                properties:
+                  userId:
+                    $ref: '#/components/schemas/FullUser/properties/userId'
+                  token:
+                    $ref: '#/components/schemas/FullUser/properties/userToken'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /users/logout:
+    post:
+      tags:
+        - users
+      summary: Log out the currently authorised user.
+      security:
+        - UserToken: []
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  '/users/{id}':
+    parameters:
+      - name: id
+        description: ID of the user.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/FullUser/properties/userId'
+    get:
+      tags:
+        - users
+      summary: Retrieve information about a user.
+      description: >-
+        The email field is only included when the currently authenticated user
+        is viewing their **own** details.
+      security:
+        - {}
+        - UserToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    patch:
+      tags:
+        - users
+      summary: Change a user's details.
+      description: >-
+        Only accessible by the user themselves. The email must be syntactically
+        valid (e.g. it has to include an `@`, but whether or not it is actually
+        a registered email address will not be checked). The email address must
+        not already be in use. The password must not be empty. If the password
+        is being changed, then the current password must also be provided.
+      security:
+        - UserToken: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: ChangeUserDetailsRequest
+              properties:
+                name:
+                  $ref: '#/components/schemas/User/properties/name'
+                email:
+                  $ref: '#/components/schemas/User/properties/email'
+                password:
+                  $ref: '#/components/schemas/FullUser/properties/password'
+                currentPassword:
+                  $ref: '#/components/schemas/FullUser/properties/password'
+                city:
+                  $ref: '#/components/schemas/User/properties/city'
+                country:
+                  $ref: '#/components/schemas/User/properties/country'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+  '/users/{id}/photo':
+    parameters:
+      - name: id
+        description: ID of the user.
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/FullUser/properties/userId'
+    get:
+      tags:
+        - users.photos
+      summary: Retrieve a user's profile photo.
+      description: >-
+        The response MIME type will be either `image/png`, `image/jpeg`, or
+        `image/gif`, depending on the file type of the image being retrieved.
+      responses:
+        '200':
+          description: OK
+          content:
+            image:
+              schema:
+                $ref: '#/components/schemas/BinaryImageFile'
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - users.photos
+      summary: Set a user's profile photo.
+      description: >-
+        Only accessible to the user themselves. If the user already has a
+        profile photo, the current profile photo will be replaced with it, and a
+        200 OK response will be sent. If not, a 201 Created response will be
+        sent.
+
+
+        If the file is a `.png`, the request will be sent with `Content-Type:
+        image/png`. If the file is a `.jpeg` or `.jpg`, the request will be sent
+        with `Content-Type: image/jpeg`. If the file is a `.gif`, the request
+        will be sent with `Content-Type: image/gif`.
+
+
+        The request body should contain the raw binary content of the photo,
+        i.e. it should not be in `multipart/form-data` format or contain any
+        file metadata. 
+      security:
+        - UserToken: []
+      requestBody:
+        content:
+          image/png:
+            schema:
+              $ref: '#/components/schemas/BinaryImageFile'
+          image/jpeg:
+            schema:
+              $ref: '#/components/schemas/BinaryImageFile'
+          image/gif:
+            schema:
+              $ref: '#/components/schemas/BinaryImageFile'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - users.photos
+      summary: Delete a user's profile photo.
+      security:
+        - UserToken: []
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /reload:
+    post:
+      tags:
+        - Backdoor
+      summary: >-
+        Force reset of database to original structure and reload sample of data
+        into database.
+      responses:
+        '201':
+          description: Created
+        '500':
+          description: Internal Server Error
+  /reset:
+    post:
+      tags:
+        - Backdoor
+      summary: Force reset of database to original structure.
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Internal Server Error
+  /resample:
+    post:
+      tags:
+        - Backdoor
+      summary: Reload sample of data into database.
+      responses:
+        '201':
+          description: Created
+        '500':
+          description: Internal Server Error
+  /executeSql:
+    post:
+      tags:
+        - Backdoor
+      summary: >-
+        Execute any arbitrary SQL statement provided, and return the output from
+        the database.
+      description: >-
+        This is an enormous security hole, and wouldn't be present in any real
+        application. However, we're using it for testing purposes in this
+        assignment.
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              title: SqlCommand
+              type: string
+              example: SELECT * FROM Venue;
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/SqlResult'
+                  - $ref: '#/components/schemas/SqlResultSet'
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          example: Adam Anderson
+        city:
+          type: string
+          minLength: 1
+          example: Christchurch
+          nullable: true
+        country:
+          type: string
+          minLength: 1
+          example: New Zealand
+          nullable: true
+        email:
+          type: string
+          minLength: 1
+          format: email
+          example: aaa11@uclive.ac.nz
+    FullUser:
+      title: FullUser
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/User'
+      properties:
+        userId:
+          type: integer
+          minimum: 0
+          example: 11
+        password:
+          type: string
+          minLength: 1
+          format: password
+          example: letmein
+        userToken:
+          type: string
+          example: JSkIEpXk0b2jLgDpRuKAjGwCbFnDM0Tj
+    Petition:
+      title: Petition
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/PetitionOverview'
+      properties:
+        description:
+          type: string
+          example: Schools need more money.
+        authorId:
+          $ref: '#/components/schemas/FullUser/properties/userId'
+        authorCity:
+          $ref: '#/components/schemas/User/properties/city'
+        authorCountry:
+          $ref: '#/components/schemas/User/properties/country'
+        createdDate:
+          $ref: '#/components/schemas/DateTimeOutput'
+        closingDate:
+          allOf:
+            - $ref: '#/components/schemas/DateTimeOutput'
+          nullable: true
+    PetitionOverview:
+      title: PetitionOverview
+      type: object
+      properties:
+        petitionId:
+          type: integer
+          example: 1
+        title:
+          type: string
+          minLength: 1
+          example: Increase the education budget
+        category:
+          $ref: '#/components/schemas/Category/properties/name'
+        authorName:
+          $ref: '#/components/schemas/User/properties/name'
+        signatureCount:
+          type: integer
+          example: 42
+    Category:
+      title: Category
+      type: object
+      properties:
+        categoryId:
+          type: integer
+          example: 1
+        name:
+          type: string
+          minLength: 1
+          example: Animals
+    PetitionSearchRequest:
+      title: PetitionSearchRequest
+      type: object
+      properties:
+        startIndex:
+          type: integer
+          minimum: 0
+          default: 0
+          example: 20
+        count:
+          type: integer
+          minimum: 0
+          example: 10
+        q:
+          $ref: '#/components/schemas/PetitionOverview/properties/title'
+        categoryId:
+          $ref: '#/components/schemas/Category/properties/categoryId'
+        authorId:
+          $ref: '#/components/schemas/FullUser/properties/userId'
+        sortBy:
+          type: string
+          enum:
+            - ALPHABETICAL_ASC
+            - ALPHABETICAL_DESC
+            - SIGNATURES_ASC
+            - SIGNATURES_DESC
+          default: SIGNATURES_DESC
+        reverseSort:
+          type: boolean
+          default: false
+    Signature:
+      title: Signature
+      type: object
+      properties:
+        signatoryId:
+          $ref: '#/components/schemas/FullUser/properties/userId'
+        name:
+          $ref: '#/components/schemas/User/properties/name'
+        city:
+          $ref: '#/components/schemas/User/properties/city'
+        country:
+          $ref: '#/components/schemas/User/properties/country'
+        signedDate:
+          $ref: '#/components/schemas/DateTimeOutput'
+    DateTimeInput:
+      title: DateTimeInput
+      description: >-
+        A datetime expressed with no timezone, as either a date (yyyy-MM-dd) or
+        date and time (yyyy-MM-dd hh:mm:ss.sss)
+      type: string
+      example: '2012-04-23 18:25:43.511'
+    DateTimeOutput:
+      title: DateTimeOutput
+      description: 'A UTC datetime expressed in ISO8601 format (yyyy-MM-ddThh:mm:ss.sssZ)'
+      type: string
+      example: '2012-04-23T18:25:43.511Z'
+    BinaryImageFile:
+      type: string
+      format: binary
+      description: 'The raw content of the PNG, JPEG, or GIF image file.'
+      example: '(raw content of PNG, JPEG, or GIF image file)'
+    SqlResult:
+      type: object
+      properties:
+        fieldCount:
+          type: integer
+          example: 0
+        affectedRows:
+          type: integer
+          example: 1
+        insertId:
+          type: integer
+          example: 0
+        serverStatus:
+          type: integer
+          example: 2
+        warningCount:
+          type: integer
+          example: 0
+        message:
+          type: string
+          example: '(Rows matched: 1  Changed: 0  Warnings: 0'
+        protocol41:
+          type: boolean
+        changedRows:
+          type: integer
+    SqlResultSet:
+      type: array
+  securitySchemes:
+    UserToken:
+      type: apiKey
+      name: X-Authorization
+      in: header

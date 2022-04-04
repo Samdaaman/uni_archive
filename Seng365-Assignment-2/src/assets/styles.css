@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box;
+}
+#error-div {
+  background-color: #ff9f9f;
+  padding: 10px;
+  color: #000000;
+}
+#success-div {
+  background-color: lightgreen;
+  padding: 10px;
+  color: black;
+}
+.form-container {
+  margin: auto;
+  max-width: 600px;
+  padding: 20px;
+}
+.gen-form {
+  padding: 5px 0 20px;
+  border: 1px solid blue;
+}
+.gen-form-input {
+  width: 100%;
+  padding: 7px;
+}
+.form-col-50 {
+  width: 50%;
+  float: left;
+  display: inline;
+  padding: 0 15px 0;
+}
+.form-col-33 {
+  width: 33.33%;
+  float: left;
+  display: inline;
+  padding: 0 15px 0;
+}
+.form-button-container {
+  clear: both;
+  margin-top: 10px;
+  padding: 25px 15px 0;
+}
+.form-button {
+  width: 100%;
+  height: 50px;
+  font-size: larger;
+}
+.form-button-small {
+  width: 100%;
+  height: 32px;
+}
+.form-label {
+  margin-top: 15px;
+}
+.form-sub-label {
+  color: #b4b4b4;
+  font-size: smaller;
+  margin-left: 10px;
+}
+.form-hr {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.form-h1 {
+  text-align: center;
+}
+.d-l {
+  width: 50%;
+  float: left;
+  display: inline;
+  padding-right: 15px;
+}
+.d-r {
+  width: 50%;
+  float: left;
+  display: inline;
+  padding-left: 15px;
+}
+.n-ul {
+  list-style: none;
+}
+.modal-backdrop {
+  opacity:0.75 !important;
+}
+

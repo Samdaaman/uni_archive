@@ -1,0 +1,14 @@
+Change Component Designator: OldDesignator=TP1 NewDesignator=TP5
+Change Component Designator: OldDesignator=TP2 NewDesignator=TP6
+Change Component Designator: OldDesignator=TP3 NewDesignator=TP7
+Change Component Designator: OldDesignator=TP4 NewDesignator=TP8
+Change Component Designator: OldDesignator=TP5 NewDesignator=TP1
+Change Component Designator: OldDesignator=TP6 NewDesignator=TP2
+Change Component Designator: OldDesignator=TP7 NewDesignator=TP3
+Change Component Designator: OldDesignator=TP8 NewDesignator=TP4
+Added Member To Class: ClassName=MotorDriver Member=Component TP5 A_OUT1
+Added Member To Class: ClassName=MotorDriver Member=Component TP6 A_OUT2
+Added Member To Class: ClassName=MotorDriver Member=Component TP7 B_OUT1
+Added Member To Class: ClassName=MotorDriver Member=Component TP8 B_OUT2
+Added Room: Name=MotorDriver
+Added Room: Name=Racer

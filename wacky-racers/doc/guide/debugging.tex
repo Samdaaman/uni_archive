@@ -1,0 +1,32 @@
+\chapter{Debugging}
+\label{debugging}
+
+Your SAM4S can be debugged using \hyperref[OpenOCD]{OpenOCD} in
+conjunction with GDB.  However, debugging embedded systems is
+difficult due to asynchronous behaviour.  Moreover, when optimising, a
+compiler will rearrange (and even remove) code and hold variables in
+registers.
+
+\section{Command-line debugging with GDB}
+
+If \program{OpenOCD} is running, a running program can be debugged using:
+
+\begin{minted}{bash}
+$ make debug
+\end{minted}
+
+This starts \program{GDB} and attaches to the SAM4S. \program{GDB} is
+a command line debugger but there are many GUI programs that will
+control it, for example, \program{vscode} and \program{geany} have
+plugins.
+
+\program{GDB} allows you to inspect the CPU registers, memory, set
+breakpoints, set watchpoints, and much more.
+
+You can reset your program using the GDB `jump reset` command.
+However, this does not reset the peripherals as with a power-on reset.
+
+The backtrace, \code{bt}, command is useful to show the function call
+stack.
+
+

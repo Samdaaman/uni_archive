@@ -1,0 +1,176 @@
+Change Component Comment : Designator=U3_1 Old Comment=Comment New Comment=ADP2302ARDZ-5.0 BUCK
+Change Component Comment : Designator=U1_1 Old Comment=Comment New Comment=ATSAM4S8BA-ANR
+Change Component Comment : Designator=U2_1 Old Comment=Comment New Comment=MPU-9250
+Change component parameters: Designator = "U3_1"; Footprint = "RD_8_1"; UniqueID = "\DBUOZIXZ"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Current - Output"; Value = "2A"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Frequency - Switching"; Value = "700kHz"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer_Part_Number"; Value = "ADP2302ARDZ-5.0-R7"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Output Type"; Value = "Fixed"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier Part Number 1"; Value = "ADP2302ARDZ-5.0-R7CT-ND"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Type"; Value = "DEV"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "Value"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Vendor"; Value = "Analog Devices Inc"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage - Input (Max)"; Value = "20V"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage - Output (Min/Fixed)"; Value = "5V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "U1_1"; Footprint = "LQFP64_L"; UniqueID = "\KZKYHNHL"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Code_JEDEC"; Value = "MO-220VMMD-3"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink1Description"; Value = "Manufacturer URL"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.atmel.com/"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink2Description"; Value = "SAM4S Series Datasheet"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink2URL"; Value = "http://www.atmel.com/dyn/resources/prod_documents/11100.pdf"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink3Description"; Value = "SAM4S Series Summary"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ComponentLink3URL"; Value = "http://www.atmel.com/dyn/resources/prod_documents/11100S.pdf"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Connectivity"; Value = "I²C, IrDA, Memory Card, SPI, SSC, UART/USART, USB"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Core Processor"; Value = "ARM® Cortex®-M4"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Core Size"; Value = "32-Bit"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Data Converters"; Value = "A/D 11x12b, D/A 2x12b"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer"; Value = "Atmel"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer Part Number"; Value = "ATSAM4S8BA-ANR"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Number of I/O"; Value = "47"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package / Case"; Value = "64-LQFP"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageDescription"; Value = "64-Pin Quad Flat No-Lead (QFN) Sawn, 9 x 9 x 1.0 mm Body, 0.5 mm Pitch, Exposed Pad"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageReference"; Value = "64PS"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "PackageVersion"; Value = "revJ, Jul-2007"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Packaging"; Value = "Cut Tape (CT)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Peripherals"; Value = "Brown-out Detect/Reset, DMA, POR, PWM, WDT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Program Memory Size"; Value = "512KB (512K x 8)"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Program Memory Type"; Value = "FLASH"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "RAM Size"; Value = "128K x 8"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Speed"; Value = "120MHz"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier 1"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Supplier Part Number 1"; Value = "ATSAM4S8BA-ANRCT-ND"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage - Supply (Vcc/Vdd)"; Value = "1.62 V ~ 3.6 V"; VariantName = "[No Variations]"
+Added Net: Name=3V3_RADIO
+Added Pin To Net: NetName=3V3 Pin=U2_1-1
+Added Pin To Net: NetName=3V3 Pin=U2_1-8
+Added Pin To Net: NetName=3V3 Pin=U2_1-13
+Added Pin To Net: NetName=3V3 Pin=U2_1-22
+Added Net: Name=3V3
+Added Net: Name=5V
+Added Pin To Net: NetName=BAT_VDIV Pin=U1_1-14
+Added Net: Name=BAT_VDIV
+Added Pin To Net: NetName=BUTTON Pin=U1_1-44
+Added Net: Name=BUTTON
+Added Pin To Net: NetName=BUZZER Pin=U1_1-3
+Added Net: Name=BUZZER
+Added Pin To Net: NetName=COM_CE Pin=U1_1-29
+Added Net: Name=COM_CE
+Added Pin To Net: NetName=COM_CSN Pin=U1_1-28
+Added Net: Name=COM_CSN
+Added Pin To Net: NetName=COM_IRQ Pin=U1_1-30
+Added Net: Name=COM_IRQ
+Added Net: Name=D_N
+Added Net: Name=D_P
+Added Pin To Net: NetName=DIP_0 Pin=U1_1-19
+Added Net: Name=DIP_0
+Added Pin To Net: NetName=DIP_1 Pin=U1_1-9
+Added Net: Name=DIP_1
+Added Pin To Net: NetName=DIP_2 Pin=U1_1-10
+Added Net: Name=DIP_2
+Added Pin To Net: NetName=DIP_3 Pin=U1_1-11
+Added Net: Name=DIP_3
+Added Pin To Net: NetName=DIP_4 Pin=U1_1-16
+Added Net: Name=DIP_4
+Added Pin To Net: NetName=DIP_5 Pin=U1_1-13
+Added Net: Name=DIP_5
+Added Pin To Net: NetName=DIP_6 Pin=U1_1-15
+Added Net: Name=DIP_6
+Added Pin To Net: NetName=DIP_7 Pin=U1_1-23
+Added Net: Name=DIP_7
+Added Pin To Net: NetName=GND Pin=U2_1-9
+Added Pin To Net: NetName=GND Pin=U2_1-11
+Added Pin To Net: NetName=GND Pin=U2_1-18
+Added Pin To Net: NetName=GND Pin=U2_1-20
+Added Pin To Net: NetName=GND Pin=U3_1-7
+Added Pin To Net: NetName=GND Pin=U3_1-EPAD
+Added Net: Name=GND
+Added Pin To Net: NetName=I2C_SCL Pin=U1_1-33
+Added Pin To Net: NetName=I2C_SCL Pin=U2_1-23
+Added Net: Name=I2C_SCL
+Added Pin To Net: NetName=I2C_SDA Pin=U1_1-49
+Added Pin To Net: NetName=I2C_SDA Pin=U2_1-24
+Added Net: Name=I2C_SDA
+Added Pin To Net: NetName=JOYSTICK_2 Pin=U1_1-5
+Added Net: Name=JOYSTICK_2
+Added Pin To Net: NetName=JOYSTICK_5 Pin=U1_1-4
+Added Net: Name=JOYSTICK_5
+Added Pin To Net: NetName=JOYSTICK_SW Pin=U1_1-25
+Added Net: Name=JOYSTICK_SW
+Added Pin To Net: NetName=LED_STRIP_3V3 Pin=U1_1-43
+Added Net: Name=LED_STRIP_3V3
+Added Net: Name=LED_STRIP_5V
+Added Pin To Net: NetName=NetC3_1 Pin=U2_1-10
+Added Net: Name=NetC3_1
+Added Pin To Net: NetName=NetC4_2 Pin=U1_1-62
+Added Net: Name=NetC4_2
+Added Pin To Net: NetName=NetC5_2 Pin=U1_1-61
+Added Net: Name=NetC5_2
+Added Pin To Net: NetName=NetC8_1 Pin=U3_1-1
+Added Net: Name=NetC8_1
+Added Pin To Net: NetName=NetC8_2 Pin=U3_1-8
+Added Net: Name=NetC8_2
+Added Pin To Net: NetName=NetC10_2 Pin=U3_1-5
+Added Net: Name=NetC10_2
+Added Net: Name=NetC13_2
+Added Net: Name=NetC14_2
+Added Net: Name=NetC15_1
+Added Net: Name=NetC23_1
+Added Net: Name=NetC23_2
+Added Net: Name=NetD1_1
+Added Net: Name=NetD1_3
+Added Net: Name=NetDL1_1
+Added Net: Name=NetDL2_1
+Added Net: Name=NetF1_1
+Added Pin To Net: NetName=NetH1_1 Pin=U1_1-52
+Added Net: Name=NetH1_1
+Added Pin To Net: NetName=NetH1_2 Pin=U1_1-42
+Added Net: Name=NetH1_2
+Added Pin To Net: NetName=NetH1_3 Pin=U1_1-41
+Added Net: Name=NetH1_3
+Added Pin To Net: NetName=NetH1_4 Pin=U1_1-38
+Added Net: Name=NetH1_4
+Added Pin To Net: NetName=NetH1_5 Pin=U1_1-37
+Added Net: Name=NetH1_5
+Added Pin To Net: NetName=NetH1_6 Pin=U1_1-26
+Added Net: Name=NetH1_6
+Added Net: Name=NetQ1_1
+Added Net: Name=NetQ2_1
+Added Pin To Net: NetName=NetR4_2 Pin=U1_1-57
+Added Net: Name=NetR4_2
+Added Pin To Net: NetName=NetR5_2 Pin=U1_1-56
+Added Net: Name=NetR5_2
+Added Pin To Net: NetName=NetR9_1 Pin=U3_1-3
+Added Net: Name=NetR9_1
+Added Pin To Net: NetName=NetTP2_1 Pin=U1_1-55
+Added Net: Name=NetTP2_1
+Added Pin To Net: NetName=nRST Pin=U1_1-39
+Added Net: Name=nRST
+Added Pin To Net: NetName=SLEEP Pin=U1_1-20
+Added Net: Name=SLEEP
+Added Pin To Net: NetName=SPI_MISO Pin=U1_1-27
+Added Net: Name=SPI_MISO
+Added Pin To Net: NetName=SPI_MOSI Pin=U1_1-22
+Added Net: Name=SPI_MOSI
+Added Pin To Net: NetName=SPI_SPCK Pin=U1_1-21
+Added Net: Name=SPI_SPCK
+Added Pin To Net: NetName=STATUS0 Pin=U1_1-48
+Added Net: Name=STATUS0
+Added Pin To Net: NetName=STATUS1 Pin=U1_1-47
+Added Net: Name=STATUS1
+Added Pin To Net: NetName=SWCLK Pin=U1_1-53
+Added Net: Name=SWCLK
+Added Pin To Net: NetName=SWDIO Pin=U1_1-51
+Added Net: Name=SWDIO
+Added Pin To Net: NetName=USB_DETECT Pin=U1_1-35
+Added Net: Name=USB_DETECT
+Added Pin To Net: NetName=V_BATT_FUSED Pin=U3_1-2
+Added Pin To Net: NetName=V_BATT_FUSED Pin=U3_1-4
+Added Net: Name=V_BATT_FUSED
+Added Net: Name=V_BATT
+Added Net: Name=VBUS
+Added Class: Name=Hat
+Added Differential Pair: Name=D
+Added Room: Name=Hat

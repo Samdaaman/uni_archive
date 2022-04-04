@@ -1,0 +1,57 @@
+
+
+Created and Tested using AD16.1.10 (Build 233) - 2018 ECE Dept installed version.
+
+20 Nov 2018
+Recompiled using altium16.1 because of issues with sch symbols intermittently disappearing - this stopped components from being placed. 
+
+Created using AD18.1.9 (Build 240)
+Tested using AD16.1.10 (Build 233) - 2018 ECE Dept installed version.
+
+11 November 2018
+***ECE Components_18V3.IntLib***
+ADD - JA_HDR_IDC_4X2_VERT - 8 PIN 0.1" IDC through hole connector + supplier data
+ADD - IDC2.54-V08D 6PIN-IDC footprint and 3D model - Linked to JA_HDR_IDC_4x2_VERT
+
+
+
+
+
+
+
+Created using AD18.1.7 (Build 191)
+Tested using AD16.1.10 (Build 233) - 2018 ECE Dept installed version.
+
+28 AUGUST 2018
+***ECE Components_18V2.IntLib***
+ADD - FS_FUSE_10A smd fuse 
+FIX - JA_TERM_BLK_HDR2 - E14 manufacturer & part numbers mixed. Added Digikey data
+DEL - Remove 100nF 0402 cap.
+DEL - DS_VS_30BQD015TRPBF - obsolete
+ADD - DS_VS_30BQ015-M3 - replacement for DS_VS_30BQD015TRPBF
+FIX - TM_SSM3J328R - update parameters VDSS & ID(dc). Fix part#. Add datasheet
+FIX - WS_EVQPNF05M - increase footprint pads 2x1.6 -> 2.5x1.6. Allows rework.
+FIX - FS_FUSE_5.0A - obsolete, remove old & add new part data & links
+FIX - DR_BAS16TT1G - Fix E14 part #, add  Digikey data
+FIX - XT_CRYSTAL - correct the Digikey supplier information + links
+FIX - WS_SKUDBE010 - Nav switch - correct footprint pad spacing
+ADD - TP_1206 - add 3d model
+DEL - JP_1613 14 DC socket - obsolete
+ADD - JP_PJ-002AH-SMT-TR - replaces JP_1613 14. 
+FIX - JP_PJ-002AH-SMT-TR - Redraw schematic symbol - this was incorrect on obsolete part also (switching is on outer barrel not inner pin).
+FIX - CA_470uF_16V - replace incorrect E14 parameters - add Digikey part info
+FIX - CA_1000uF_16V - add Digikey info
+FIX - JS_USB_MICRO_B_SMT - corrected footprint minimum width violation. Improved pad shape on GNDs for better strain relief and easier rework. Adj silkscreen.
+ADD - JA_HDR_IDC_3X2_VERT - 6 PIN 0.1" IDC through hole connector + supplier data
+ADD - IDC2.54-V06D 6PIN-IDC footprint and 3D model - Linked to JA_HDR_IDC_3x2_VERT
+FIX - SV_TLV1117-33CDC add note to schematic symbol that warns about relatively high Vdropout at full load
+FIX - SV_TLV1117-50CDC add note to schematic symbol that warns about relatively high Vdropout at full load
+
+
+
+
+Previous updates:
+
+***ECE_Components_16_2.IntLib***
+-JB_IDC_BOX_HDR_10, schematic symbol pinout corrected
+-SV_LD29300 removed - obsolete

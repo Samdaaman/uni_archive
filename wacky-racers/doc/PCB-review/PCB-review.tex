@@ -1,0 +1,121 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{url}
+
+\input a4size
+
+
+\title{ENCE461 PCB Review}
+%\author{M.P. Hayes}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+
+\begin{center}
+  \textbf{Bring this checklist, annotated with ticks or question
+    marks, a printout of your new schematics, and the schematics
+    annotated at the schematic rewiew.}
+\end{center}
+
+
+\section*{Schematic}
+
+\begin{enumerate}
+\item Battery is fused before any other electrical connection
+
+\item Battery has reverse polarity protection (hat board only)
+
+\item Radio has power supply filtering
+
+\end{enumerate}
+
+
+\section*{Silk screen layer}
+
+\begin{enumerate}
+\item Has group number
+
+\item Has student names
+
+\item Has clearly labelled test points
+
+\item Has clearly labelled battery polarity for hat board
+
+\item Has clearly labelled connectors
+
+\end{enumerate}
+
+
+\section*{Mechanical}
+
+\begin{enumerate}
+\item Drill sizes meet requirements (min 0.3, steps of 0.1)
+
+\item USB connector hangs over edge correctly
+
+\item Radio antenna hangs over edge or there are cut-outs in the PCB planes
+\end{enumerate}
+
+\pagebreak
+
+\section*{Plane layers}
+
+\begin{enumerate}
+\item Has a ground plane
+
+\item The ground plane is connected to the GND net
+
+\item Has a power plane (this can be partitioned)
+
+\item The power planes are connected to the appropriate power nets
+
+\item Has cut outs for the radio antenna if the antenna does not hang
+  over edge
+\end{enumerate}
+
+
+\section*{Signal layer}
+
+\begin{enumerate}
+\item All vias go from top to bottom layers
+
+\item There are no long power/ground traces to planes (use more vias)
+
+\item Large vias and wide traces are used for power/ground and
+  high-current traces
+
+\item IC pins are not connected between the pads
+
+\item SPI, I2C, PWM, and UART signals do not run over gaps in a plane
+
+\item SPI, I2C, PWM, and UART signals do not change layers more than twice
+
+\item Ground test points are positioned for ease of use
+\end{enumerate}
+
+
+\section*{Design rule check}
+
+\begin{enumerate}
+\item There are no clearance violations when performing a design rule check
+
+\item There are no trace width violations when performing a design rule check
+
+\item There are no unrouted nets
+\end{enumerate}
+
+Note, Altium gets confused with the pad to plane check when adding
+decoupling caps, so ignore warnings with distances of 2.5\,m.
+
+
+\section*{Further checks}
+
+See
+\url{http://ecewiki.elec.canterbury.ac.nz/mediawiki/index.php/PCB_guidelines}
+and
+\url{http://ecewiki.elec.canterbury.ac.nz/mediawiki/index.php/PCB_advanced_guidelines}.
+
+
+\end{document}

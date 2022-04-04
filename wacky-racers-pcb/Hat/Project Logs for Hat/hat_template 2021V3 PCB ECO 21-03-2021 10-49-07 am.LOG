@@ -1,0 +1,20 @@
+Change Component Designator: OldDesignator=H2 NewDesignator=H1
+Change Component Designator: OldDesignator=H3 NewDesignator=H2
+Change Component Designator: OldDesignator=H4 NewDesignator=H3
+Change Component Designator: OldDesignator=U1_1 NewDesignator=U2
+Change Component Designator: OldDesignator=U2_1 NewDesignator=U1
+Change Component Designator: OldDesignator=U3_1 NewDesignator=U4
+Change Component Library : Designator=S1 Old Library=ECE AD19Components_19V1.IntLib New Library=ENCE461_extras_2020.IntLib
+Added Component: Designator=S4(EVQPNF05M)
+Add component (AddParameter): Name = "Manufacturer"; Value = "Panasonic"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer PN"; Value = "EVQPNF05M"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "6.0 x 3.5 mm"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Storage Location"; Value = "PCB Assembly WS"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "ECE Dept"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 1"; Value = "Farnell"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier 2"; Value = "Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 1"; Value = "2079481"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number 2"; Value = "P13598SCT-ND"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=SLEEP Pin=S4-1
+Added Pin To Net: NetName=GND Pin=S4-2
+Added Member To Class: ClassName=Hat Member=Component S4 EVQPNF05M

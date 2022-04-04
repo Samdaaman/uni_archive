@@ -1,0 +1,12 @@
+.venv
+__pycache__
+bigass.py
+test.py
+
+
+*.m~
+*.pyc
+
+# MAC OS Generated files ##
+.DS_Store
+.DS_Store?
